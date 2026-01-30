@@ -1,0 +1,61 @@
+{
+  "sector_id": "restaurant",
+  "sector_name": {
+    "en": "Restaurant & Cafe",
+    "ar": "مطعم وكافيه"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 🍽️ How can I help you today?",
+    "ar": "أهلاً بك في {business_name}! 🍽️ كيف أقدر أساعدك؟"
+  },
+  "catalog": [
+    {"id": "R001", "name_en": "Grilled Chicken", "name_ar": "فراخ مشوية", "price": 120, "unit": "plate"},
+    {"id": "R002", "name_en": "Beef Burger", "name_ar": "برجر لحمة", "price": 85, "unit": "sandwich"},
+    {"id": "R003", "name_en": "Caesar Salad", "name_ar": "سلطة سيزر", "price": 65, "unit": "bowl"},
+    {"id": "R004", "name_en": "Fresh Juice", "name_ar": "عصير طازج", "price": 35, "unit": "glass"},
+    {"id": "R005", "name_en": "Coffee", "name_ar": "قهوة", "price": 25, "unit": "cup"},
+    {"id": "R006", "name_en": "Chicken Shawarma", "name_ar": "شاورما فراخ", "price": 55, "unit": "sandwich"},
+    {"id": "R007", "name_en": "Meat Shawarma", "name_ar": "شاورما لحمة", "price": 70, "unit": "sandwich"},
+    {"id": "R008", "name_en": "Falafel Sandwich", "name_ar": "ساندوتش فلافل", "price": 25, "unit": "sandwich"},
+    {"id": "R009", "name_en": "Kofta Plate", "name_ar": "طبق كفتة", "price": 95, "unit": "plate"},
+    {"id": "R010", "name_en": "Mixed Grill", "name_ar": "مشويات مشكلة", "price": 180, "unit": "plate"},
+    {"id": "R011", "name_en": "Fried Rice", "name_ar": "أرز محمر", "price": 35, "unit": "plate"},
+    {"id": "R012", "name_en": "French Fries", "name_ar": "بطاطس محمرة", "price": 30, "unit": "plate"},
+    {"id": "R013", "name_en": "Hummus", "name_ar": "حمص", "price": 35, "unit": "plate"},
+    {"id": "R014", "name_en": "Baba Ghanoush", "name_ar": "بابا غنوج", "price": 40, "unit": "plate"},
+    {"id": "R015", "name_en": "Fattoush Salad", "name_ar": "سلطة فتوش", "price": 45, "unit": "bowl"},
+    {"id": "R016", "name_en": "Chicken Wings (6)", "name_ar": "أجنحة فراخ (6)", "price": 75, "unit": "plate"},
+    {"id": "R017", "name_en": "Fish Fillet", "name_ar": "فيليه سمك", "price": 110, "unit": "plate"},
+    {"id": "R018", "name_en": "Shrimp Plate", "name_ar": "طبق جمبري", "price": 150, "unit": "plate"},
+    {"id": "R019", "name_en": "Pasta Alfredo", "name_ar": "باستا ألفريدو", "price": 85, "unit": "plate"},
+    {"id": "R020", "name_en": "Pizza Margherita", "name_ar": "بيتزا مارجريتا", "price": 95, "unit": "pizza"},
+    {"id": "R021", "name_en": "Pizza Pepperoni", "name_ar": "بيتزا بيبروني", "price": 120, "unit": "pizza"},
+    {"id": "R022", "name_en": "Chicken Soup", "name_ar": "شوربة فراخ", "price": 35, "unit": "bowl"},
+    {"id": "R023", "name_en": "Lentil Soup", "name_ar": "شوربة عدس", "price": 30, "unit": "bowl"},
+    {"id": "R024", "name_en": "Ice Cream", "name_ar": "آيس كريم", "price": 35, "unit": "cup"},
+    {"id": "R025", "name_en": "Chocolate Cake", "name_ar": "كيكة شوكولاتة", "price": 55, "unit": "slice"},
+    {"id": "R026", "name_en": "Cheesecake", "name_ar": "تشيز كيك", "price": 65, "unit": "slice"},
+    {"id": "R027", "name_en": "Kunafa", "name_ar": "كنافة", "price": 45, "unit": "plate"},
+    {"id": "R028", "name_en": "Tea", "name_ar": "شاي", "price": 15, "unit": "cup"},
+    {"id": "R029", "name_en": "Cappuccino", "name_ar": "كابتشينو", "price": 40, "unit": "cup"},
+    {"id": "R030", "name_en": "Latte", "name_ar": "لاتيه", "price": 45, "unit": "cup"},
+    {"id": "R031", "name_en": "Hot Chocolate", "name_ar": "هوت شوكليت", "price": 45, "unit": "cup"},
+    {"id": "R032", "name_en": "Mango Smoothie", "name_ar": "سموذي مانجو", "price": 50, "unit": "glass"},
+    {"id": "R033", "name_en": "Strawberry Smoothie", "name_ar": "سموذي فراولة", "price": 50, "unit": "glass"},
+    {"id": "R034", "name_en": "Lemonade", "name_ar": "ليمونادة", "price": 30, "unit": "glass"},
+    {"id": "R035", "name_en": "Mineral Water", "name_ar": "مياه معدنية", "price": 10, "unit": "bottle"}
+  ],
+  "faqs": [
+    {"keywords": ["delivery", "توصيل", "deliver"], "answer_en": "Yes, we deliver! Delivery fee is 20 EGP within 5km.", "answer_ar": "أيوه بنوصّل! رسوم التوصيل 20 جنيه في نطاق 5 كم."},
+    {"keywords": ["time", "وقت", "hours", "مواعيد"], "answer_en": "We're open from 10 AM to 12 AM daily.", "answer_ar": "إحنا مفتوحين من 10 الصبح لـ 12 بالليل يومياً."},
+    {"keywords": ["payment", "دفع", "pay", "cash", "كاش"], "answer_en": "We accept cash and card on delivery.", "answer_ar": "بنقبل كاش وكارت عند التوصيل."}
+  ],
+  "order_flow": {
+    "ask_items": {"en": "What would you like to order?", "ar": "تحب تطلب إيه؟"},
+    "ask_quantity": {"en": "How many {item}?", "ar": "كام {item}؟"},
+    "ask_phone": {"en": "Please share your phone number:", "ar": "ممكن رقم تليفونك؟"},
+    "ask_address": {"en": "What's your delivery address?", "ar": "عنوان التوصيل إيه؟"},
+    "confirm_order": {"en": "Please confirm your order:\n{order_summary}\nTotal: {total} EGP\n\nReply YES to confirm or NO to cancel.", "ar": "تأكيد الطلب:\n{order_summary}\nالإجمالي: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."},
+    "order_confirmed": {"en": "✅ Order confirmed! Your order #{order_id} will arrive in 30-45 mins. Thank you!", "ar": "✅ تم تأكيد الطلب! طلبك رقم #{order_id} هيوصل خلال 30-45 دقيقة. شكراً!"}
+  }
+}

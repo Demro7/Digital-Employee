@@ -1,0 +1,70 @@
+{
+  "sector_id": "fashion_retail",
+  "sector_name": {
+    "en": "Fashion Retail",
+    "ar": "ملابس وأزياء"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 👗 Browse our collection or ask me anything!",
+    "ar": "أهلاً بك في {business_name}! 👗 تصفح مجموعتنا أو اسألني أي سؤال!"
+  },
+  "catalog": [
+    {"id": "F001", "name_en": "T-Shirt", "name_ar": "تيشيرت", "price": 200, "unit": "piece", "sizes": ["S", "M", "L", "XL"]},
+    {"id": "F002", "name_en": "Hoodie", "name_ar": "هودي", "price": 450, "unit": "piece", "sizes": ["S", "M", "L", "XL"]},
+    {"id": "F003", "name_en": "Cap", "name_ar": "كاب", "price": 120, "unit": "piece", "sizes": ["Free"]},
+    {"id": "F004", "name_en": "Jeans", "name_ar": "جينز", "price": 550, "unit": "piece", "sizes": ["30", "32", "34", "36"]},
+    {"id": "F005", "name_en": "Sneakers", "name_ar": "سنيكرز", "price": 800, "unit": "pair", "sizes": ["40", "41", "42", "43", "44"]}
+  ],
+  "faqs": [
+    {
+      "keywords": ["delivery", "توصيل", "ship"],
+      "answer_en": "Free shipping on orders above 500 EGP. Otherwise, 40 EGP flat rate.",
+      "answer_ar": "شحن مجاني للطلبات فوق 500 جنيه. غير كده 40 جنيه."
+    },
+    {
+      "keywords": ["return", "استرجاع", "exchange", "استبدال"],
+      "answer_en": "Returns accepted within 14 days with tags attached.",
+      "answer_ar": "الاسترجاع خلال 14 يوم بشرط التاج موجود."
+    },
+    {
+      "keywords": ["size", "مقاس", "sizes"],
+      "answer_en": "We have S, M, L, XL for most items. Ask me about specific products!",
+      "answer_ar": "عندنا S, M, L, XL لمعظم المنتجات. اسألني عن منتج معين!"
+    },
+    {
+      "keywords": ["payment", "دفع", "pay"],
+      "answer_en": "Cash on delivery or online payment (Visa/Mastercard).",
+      "answer_ar": "كاش عند الاستلام أو دفع أونلاين (فيزا/ماستركارد)."
+    }
+  ],
+  "order_flow": {
+    "ask_items": {
+      "en": "What would you like to order?",
+      "ar": "تحب تطلب إيه؟"
+    },
+    "ask_size": {
+      "en": "What size for {item}? Available: {sizes}",
+      "ar": "مقاس إيه لـ {item}؟ المتاح: {sizes}"
+    },
+    "ask_quantity": {
+      "en": "How many {item}?",
+      "ar": "كام {item}؟"
+    },
+    "ask_phone": {
+      "en": "Please share your phone number:",
+      "ar": "ممكن رقم تليفونك؟"
+    },
+    "ask_address": {
+      "en": "What's your delivery address?",
+      "ar": "عنوان التوصيل إيه؟"
+    },
+    "confirm_order": {
+      "en": "Please confirm your order:\n{order_summary}\nTotal: {total} EGP\n\nReply YES to confirm or NO to cancel.",
+      "ar": "تأكيد الطلب:\n{order_summary}\nالإجمالي: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."
+    },
+    "order_confirmed": {
+      "en": "✅ Order confirmed! Order #{order_id} will be shipped within 2-3 days. Thank you!",
+      "ar": "✅ تم تأكيد الطلب! طلب رقم #{order_id} هيتشحن خلال 2-3 أيام. شكراً!"
+    }
+  }
+}

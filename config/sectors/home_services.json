@@ -1,0 +1,65 @@
+{
+  "sector_id": "home_services",
+  "sector_name": {
+    "en": "Home Services",
+    "ar": "خدمات منزلية"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 🔧 Need help at home? I'm here!",
+    "ar": "أهلاً بك في {business_name}! 🔧 محتاج مساعدة في البيت؟ أنا هنا!"
+  },
+  "catalog": [
+    {"id": "H001", "name_en": "Plumbing Visit", "name_ar": "زيارة سباكة", "price": 150, "unit": "visit"},
+    {"id": "H002", "name_en": "Electrical Repair", "name_ar": "إصلاح كهرباء", "price": 200, "unit": "visit"},
+    {"id": "H003", "name_en": "AC Maintenance", "name_ar": "صيانة تكييف", "price": 250, "unit": "visit"},
+    {"id": "H004", "name_en": "Deep Cleaning", "name_ar": "تنظيف عميق", "price": 500, "unit": "session"},
+    {"id": "H005", "name_en": "Painting (per room)", "name_ar": "دهان (للغرفة)", "price": 800, "unit": "room"}
+  ],
+  "faqs": [
+    {
+      "keywords": ["price", "سعر", "cost"],
+      "answer_en": "Visit fee is fixed. Extra parts/materials charged separately.",
+      "answer_ar": "رسوم الزيارة ثابتة. القطع والخامات بحساب منفصل."
+    },
+    {
+      "keywords": ["time", "وقت", "when", "امتى"],
+      "answer_en": "We can schedule within 24 hours. Morning or evening slots available.",
+      "answer_ar": "نقدر نحجز خلال 24 ساعة. فترات صباحية أو مسائية."
+    },
+    {
+      "keywords": ["warranty", "ضمان"],
+      "answer_en": "30-day warranty on all repair work.",
+      "answer_ar": "ضمان 30 يوم على كل أعمال الإصلاح."
+    }
+  ],
+  "order_flow": {
+    "ask_items": {
+      "en": "What service do you need?",
+      "ar": "محتاج خدمة إيه؟"
+    },
+    "ask_details": {
+      "en": "Can you describe the issue briefly?",
+      "ar": "ممكن توصف المشكلة بشكل مختصر؟"
+    },
+    "ask_phone": {
+      "en": "Please share your phone number:",
+      "ar": "ممكن رقم تليفونك؟"
+    },
+    "ask_address": {
+      "en": "What's your address?",
+      "ar": "العنوان إيه؟"
+    },
+    "ask_time": {
+      "en": "Preferred time? (Morning 9-12 / Afternoon 2-6 / Evening 6-9)",
+      "ar": "تفضل وقت إيه؟ (صباحي 9-12 / ظهر 2-6 / مسائي 6-9)"
+    },
+    "confirm_order": {
+      "en": "Please confirm your booking:\n{order_summary}\nFee: {total} EGP\n\nReply YES to confirm or NO to cancel.",
+      "ar": "تأكيد الحجز:\n{order_summary}\nالرسوم: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."
+    },
+    "order_confirmed": {
+      "en": "✅ Booking confirmed! Reference #{order_id}. Our technician will contact you soon.",
+      "ar": "✅ تم تأكيد الحجز! رقم #{order_id}. الفني هيتواصل معاك قريباً."
+    }
+  }
+}

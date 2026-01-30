@@ -1,0 +1,61 @@
+{
+  "sector_id": "clinic",
+  "sector_name": {
+    "en": "Clinic & Beauty Center",
+    "ar": "عيادة ومركز تجميل"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 💆 How can I help you today?",
+    "ar": "أهلاً بك في {business_name}! 💆 كيف أقدر أساعدك؟"
+  },
+  "catalog": [
+    {"id": "C001", "name_en": "General Consultation", "name_ar": "كشف عام", "price": 300, "unit": "visit"},
+    {"id": "C002", "name_en": "Dental Cleaning", "name_ar": "تنظيف أسنان", "price": 400, "unit": "session"},
+    {"id": "C003", "name_en": "Facial Treatment", "name_ar": "جلسة فيشيال", "price": 500, "unit": "session"},
+    {"id": "C004", "name_en": "Hair Treatment", "name_ar": "جلسة شعر", "price": 350, "unit": "session"},
+    {"id": "C005", "name_en": "Laser Session", "name_ar": "جلسة ليزر", "price": 800, "unit": "session"}
+  ],
+  "faqs": [
+    {
+      "keywords": ["appointment", "حجز", "موعد"],
+      "answer_en": "I can book an appointment for you right now!",
+      "answer_ar": "أقدر أحجزلك موعد دلوقتي!"
+    },
+    {
+      "keywords": ["doctor", "دكتور"],
+      "answer_en": "Our doctors are certified specialists with 10+ years experience.",
+      "answer_ar": "دكاترتنا متخصصين ومعتمدين بخبرة أكتر من 10 سنين."
+    },
+    {
+      "keywords": ["insurance", "تأمين"],
+      "answer_en": "We accept most insurance cards. Please check with us.",
+      "answer_ar": "بنقبل معظم كروت التأمين. تواصل معانا للتأكد."
+    }
+  ],
+  "order_flow": {
+    "ask_items": {
+      "en": "What service would you like to book?",
+      "ar": "تحب تحجز خدمة إيه؟"
+    },
+    "ask_phone": {
+      "en": "Please share your phone number:",
+      "ar": "ممكن رقم تليفونك؟"
+    },
+    "ask_name": {
+      "en": "What's your full name?",
+      "ar": "اسمك بالكامل؟"
+    },
+    "ask_time": {
+      "en": "Preferred date and time?",
+      "ar": "تفضل تاريخ ووقت إيه؟"
+    },
+    "confirm_order": {
+      "en": "Please confirm your appointment:\n{order_summary}\nFee: {total} EGP\n\nReply YES to confirm or NO to cancel.",
+      "ar": "تأكيد الموعد:\n{order_summary}\nالرسوم: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."
+    },
+    "order_confirmed": {
+      "en": "✅ Appointment confirmed! Reference #{order_id}. See you soon!",
+      "ar": "✅ تم تأكيد الموعد! رقم #{order_id}. نشوفك قريباً!"
+    }
+  }
+}

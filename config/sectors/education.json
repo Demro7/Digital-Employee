@@ -1,0 +1,62 @@
+{
+  "sector_id": "education",
+  "sector_name": {
+    "en": "Education & Training",
+    "ar": "تعليم وتدريب"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 📚 Ready to learn something new?",
+    "ar": "أهلاً بك في {business_name}! 📚 مستعد تتعلم حاجة جديدة؟"
+  },
+  "catalog": [
+    {"id": "ED001", "name_en": "English Course (Monthly)", "name_ar": "كورس إنجليزي (شهري)", "price": 800, "unit": "month"},
+    {"id": "ED002", "name_en": "Computer Basics", "name_ar": "أساسيات كمبيوتر", "price": 600, "unit": "course"},
+    {"id": "ED003", "name_en": "Excel Advanced", "name_ar": "إكسيل متقدم", "price": 500, "unit": "course"},
+    {"id": "ED004", "name_en": "Private Tutoring (Hour)", "name_ar": "درس خصوصي (ساعة)", "price": 150, "unit": "hour"},
+    {"id": "ED005", "name_en": "IELTS Preparation", "name_ar": "تحضير IELTS", "price": 2500, "unit": "course"}
+  ],
+  "faqs": [
+    {
+      "keywords": ["schedule", "مواعيد", "time"],
+      "answer_en": "Classes available morning, afternoon, and evening. Flexible scheduling.",
+      "answer_ar": "فيه حصص صباحي وظهر ومسائي. مواعيد مرنة."
+    },
+    {
+      "keywords": ["online", "أونلاين"],
+      "answer_en": "Yes, all courses available online via Zoom.",
+      "answer_ar": "أيوه، كل الكورسات متاحة أونلاين عن طريق Zoom."
+    },
+    {
+      "keywords": ["certificate", "شهادة"],
+      "answer_en": "Certificate provided upon course completion.",
+      "answer_ar": "بنديك شهادة بعد إتمام الكورس."
+    },
+    {
+      "keywords": ["payment", "دفع", "installment", "تقسيط"],
+      "answer_en": "Payment in advance. Installments available for courses above 1000 EGP.",
+      "answer_ar": "الدفع مقدم. فيه تقسيط للكورسات فوق 1000 جنيه."
+    }
+  ],
+  "order_flow": {
+    "ask_items": {
+      "en": "Which course are you interested in?",
+      "ar": "مهتم بكورس إيه؟"
+    },
+    "ask_phone": {
+      "en": "Please share your phone number:",
+      "ar": "ممكن رقم تليفونك؟"
+    },
+    "ask_name": {
+      "en": "What's your full name?",
+      "ar": "اسمك بالكامل؟"
+    },
+    "confirm_order": {
+      "en": "Please confirm your enrollment:\n{order_summary}\nFee: {total} EGP\n\nReply YES to confirm or NO to cancel.",
+      "ar": "تأكيد التسجيل:\n{order_summary}\nالرسوم: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."
+    },
+    "order_confirmed": {
+      "en": "✅ Enrollment confirmed! Reference #{order_id}. We'll contact you with class details.",
+      "ar": "✅ تم تأكيد التسجيل! رقم #{order_id}. هنتواصل معاك بتفاصيل الحصص."
+    }
+  }
+}

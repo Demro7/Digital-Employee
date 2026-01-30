@@ -1,0 +1,65 @@
+{
+  "sector_id": "travel",
+  "sector_name": {
+    "en": "Travel & Tourism",
+    "ar": "سياحة وسفر"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! ✈️ Where would you like to go?",
+    "ar": "أهلاً بك في {business_name}! ✈️ عايز تسافر فين؟"
+  },
+  "catalog": [
+    {"id": "T001", "name_en": "Hurghada Trip (3 days)", "name_ar": "رحلة الغردقة (3 أيام)", "price": 3500, "unit": "person"},
+    {"id": "T002", "name_en": "Sharm El Sheikh (4 days)", "name_ar": "شرم الشيخ (4 أيام)", "price": 4500, "unit": "person"},
+    {"id": "T003", "name_en": "Luxor & Aswan (3 days)", "name_ar": "الأقصر وأسوان (3 أيام)", "price": 4000, "unit": "person"},
+    {"id": "T004", "name_en": "Alexandria Day Trip", "name_ar": "رحلة إسكندرية يوم", "price": 800, "unit": "person"},
+    {"id": "T005", "name_en": "Visa Assistance", "name_ar": "مساعدة تأشيرات", "price": 500, "unit": "service"}
+  ],
+  "faqs": [
+    {
+      "keywords": ["include", "يشمل", "شامل"],
+      "answer_en": "Packages include transport, hotel, and breakfast. Ask for details!",
+      "answer_ar": "الباقات شاملة المواصلات والفندق والفطار. اسأل عن التفاصيل!"
+    },
+    {
+      "keywords": ["payment", "دفع", "deposit"],
+      "answer_en": "50% deposit to confirm. Rest before travel.",
+      "answer_ar": "50% مقدم للتأكيد. الباقي قبل السفر."
+    },
+    {
+      "keywords": ["cancel", "إلغاء"],
+      "answer_en": "Free cancellation up to 7 days before. 50% refund after.",
+      "answer_ar": "إلغاء مجاني قبل 7 أيام. بعد كده ترجع 50%."
+    }
+  ],
+  "order_flow": {
+    "ask_items": {
+      "en": "Which trip interests you?",
+      "ar": "مهتم برحلة إيه؟"
+    },
+    "ask_travelers": {
+      "en": "How many travelers?",
+      "ar": "كام شخص؟"
+    },
+    "ask_date": {
+      "en": "Preferred travel date?",
+      "ar": "تاريخ السفر المفضل؟"
+    },
+    "ask_phone": {
+      "en": "Please share your phone number:",
+      "ar": "ممكن رقم تليفونك؟"
+    },
+    "ask_name": {
+      "en": "What's your full name?",
+      "ar": "اسمك بالكامل؟"
+    },
+    "confirm_order": {
+      "en": "Please confirm your booking:\n{order_summary}\nTotal: {total} EGP\n\nReply YES to confirm or NO to cancel.",
+      "ar": "تأكيد الحجز:\n{order_summary}\nالإجمالي: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."
+    },
+    "order_confirmed": {
+      "en": "✅ Booking confirmed! Reference #{order_id}. We'll send trip details soon. Bon voyage!",
+      "ar": "✅ تم تأكيد الحجز! رقم #{order_id}. هنبعتلك تفاصيل الرحلة قريباً. رحلة سعيدة!"
+    }
+  }
+}

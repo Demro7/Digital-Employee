@@ -1,0 +1,1523 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Employee - MSME Assistant</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary: #94a3b8;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --bg-light: #f1f5f9;
+        --border: #e2e8f0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        min-height: 100vh;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .main-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        padding: 30px 0;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        opacity: 0.9;
+        font-size: 1.1rem;
+      }
+
+      /* Tab Navigation */
+      .nav-tabs-custom {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .nav-tab {
+        padding: 12px 30px;
+        background: white;
+        border: none;
+        border-radius: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: var(--secondary);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-tab:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .nav-tab.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      .nav-tab i {
+        margin-right: 8px;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .chat-wrapper {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      /* Settings Panel */
+      .settings-panel {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        width: 300px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      }
+
+      .settings-panel h3 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: var(--secondary);
+        margin-bottom: 8px;
+      }
+
+      .form-control,
+      .form-select {
+        border: 2px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 15px;
+        transition: all 0.3s;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .sector-icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+
+      /* Chat Container */
+      .chat-container {
+        flex: 1;
+        min-width: 400px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        height: 600px;
+      }
+
+      .chat-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        padding: 20px 25px;
+        border-radius: 20px 20px 0 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .chat-header .avatar {
+        width: 55px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .chat-header .info h4 {
+        margin: 0;
+        font-weight: 600;
+      }
+
+      .chat-header .info span {
+        opacity: 0.8;
+        font-size: 0.9rem;
+      }
+
+      .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        background: var(--bg-light);
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 15px;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .message-content {
+        max-width: 80%;
+        padding: 12px 18px;
+        border-radius: 18px;
+        line-height: 1.5;
+      }
+
+      .message.assistant .message-content {
+        background: white;
+        color: #333;
+        border: 1px solid var(--border);
+        border-bottom-left-radius: 5px;
+      }
+
+      .message.user .message-content {
+        background: var(--primary);
+        color: white;
+        border-bottom-right-radius: 5px;
+      }
+
+      .message-time {
+        font-size: 0.75rem;
+        color: var(--secondary);
+        margin-top: 5px;
+      }
+
+      .message.user .message-time {
+        text-align: right;
+      }
+
+      /* Typing Indicator */
+      .typing-indicator {
+        display: none;
+        padding: 15px 20px;
+      }
+
+      .typing-indicator.show {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .typing-indicator span {
+        width: 8px;
+        height: 8px;
+        background: var(--secondary);
+        border-radius: 50%;
+        animation: bounce 1.4s infinite ease-in-out;
+      }
+
+      .typing-indicator span:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+      .typing-indicator span:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+
+      @keyframes bounce {
+        0%,
+        80%,
+        100% {
+          transform: scale(0);
+        }
+        40% {
+          transform: scale(1);
+        }
+      }
+
+      /* Input Area */
+      .chat-input {
+        padding: 20px;
+        background: white;
+        border-radius: 0 0 20px 20px;
+        border-top: 1px solid var(--border);
+      }
+
+      .input-group {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+      }
+
+      .chat-input textarea {
+        flex: 1;
+        border: 2px solid var(--border);
+        border-radius: 20px;
+        padding: 12px 20px;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s;
+        resize: none;
+        min-height: 50px;
+        max-height: 150px;
+        font-family: inherit;
+        line-height: 1.4;
+      }
+
+      .chat-input textarea:focus {
+        border-color: var(--primary);
+      }
+
+      .chat-input button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        background: var(--primary);
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex-shrink: 0;
+      }
+
+      .chat-input button:hover {
+        background: var(--primary-dark);
+        transform: scale(1.05);
+      }
+
+      .chat-input button:disabled {
+        background: var(--secondary);
+        cursor: not-allowed;
+      }
+
+      /* Quick Actions */
+      .quick-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .quick-btn {
+        padding: 14px 16px;
+        background: white;
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .quick-btn:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      }
+
+      /* RTL Support */
+      .rtl {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* ============== ACCOUNTING STYLES ============== */
+      .accounting-wrapper {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .accounting-panel {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      }
+
+      .accounting-panel h3 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .expense-form-panel {
+        width: 350px;
+      }
+
+      .reports-panel {
+        flex: 1;
+        min-width: 400px;
+      }
+
+      /* Summary Cards */
+      .summary-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .summary-card {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        border: 1px solid var(--border);
+      }
+
+      .summary-card.revenue {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        border-color: var(--success);
+      }
+
+      .summary-card.expenses {
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        border-color: var(--danger);
+      }
+
+      .summary-card.profit {
+        background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+        border-color: var(--primary);
+      }
+
+      .summary-card .icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+
+      .summary-card .value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+      }
+
+      .summary-card .label {
+        font-size: 0.9rem;
+        color: var(--secondary);
+        margin-top: 5px;
+      }
+
+      /* Category Buttons */
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .category-btn {
+        padding: 12px 8px;
+        background: var(--bg-light);
+        border: 2px solid transparent;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+      }
+
+      .category-btn:hover {
+        background: #e0e7ff;
+      }
+
+      .category-btn.selected {
+        border-color: var(--primary);
+        background: #e0e7ff;
+      }
+
+      .category-btn .icon {
+        font-size: 1.5rem;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .category-btn .name {
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      /* Transaction List */
+      .transaction-list {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .transaction-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: var(--bg-light);
+      }
+
+      .transaction-item.revenue {
+        border-left: 4px solid var(--success);
+      }
+
+      .transaction-item.expense {
+        border-left: 4px solid var(--danger);
+      }
+
+      .transaction-info {
+        flex: 1;
+      }
+
+      .transaction-info .title {
+        font-weight: 600;
+        margin-bottom: 3px;
+      }
+
+      .transaction-info .meta {
+        font-size: 0.8rem;
+        color: var(--secondary);
+      }
+
+      .transaction-amount {
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .transaction-amount.positive {
+        color: var(--success);
+      }
+
+      .transaction-amount.negative {
+        color: var(--danger);
+      }
+
+      /* Report Type Selector */
+      .report-type-selector {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .report-type-btn {
+        flex: 1;
+        padding: 12px;
+        border: 2px solid var(--border);
+        border-radius: 10px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+      }
+
+      .report-type-btn:hover {
+        border-color: var(--primary);
+      }
+
+      .report-type-btn.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      /* Date Picker */
+      .date-picker-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .date-picker-row input {
+        flex: 1;
+      }
+
+      .btn-primary-custom {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-primary-custom:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .btn-success-custom {
+        background: var(--success);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-success-custom:hover {
+        background: #059669;
+      }
+
+      /* Summary Text Box */
+      .summary-text-box {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 20px;
+        border-radius: 12px;
+        font-family: "Courier New", monospace;
+        white-space: pre-wrap;
+        line-height: 1.6;
+        margin-top: 20px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .chat-wrapper,
+        .accounting-wrapper {
+          flex-direction: column;
+        }
+
+        .settings-panel,
+        .expense-form-panel {
+          width: 100%;
+        }
+
+        .chat-container,
+        .reports-panel {
+          min-width: 100%;
+        }
+
+        .category-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Order Summary Card */
+      .order-card {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 12px;
+        margin-top: 10px;
+      }
+
+      .order-card h5 {
+        margin: 0 0 10px 0;
+      }
+
+      /* Catalog Display */
+      .catalog-item {
+        background: #f0f9ff;
+        padding: 10px 15px;
+        border-radius: 10px;
+        margin: 5px 0;
+        border-left: 3px solid var(--primary);
+      }
+
+      /* Toast Notification */
+      .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+      }
+
+      .toast {
+        background: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        margin-bottom: 10px;
+        animation: slideIn 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .toast.success {
+        border-left: 4px solid var(--success);
+      }
+
+      .toast.error {
+        border-left: 4px solid var(--danger);
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="main-container">
+      <div class="header">
+        <h1><i class="fas fa-robot"></i> Digital Employee</h1>
+        <p>
+          AI-Powered Assistant for MSMEs | موظف رقمي للشركات الصغيرة والمتوسطة
+        </p>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="nav-tabs-custom">
+        <button
+          class="nav-tab active"
+          onclick="switchTab('sales')"
+          id="tabSales"
+        >
+          <i class="fas fa-comments"></i> Sales Agent
+        </button>
+        <button
+          class="nav-tab"
+          onclick="switchTab('accounting')"
+          id="tabAccounting"
+        >
+          <i class="fas fa-calculator"></i> Accounting
+        </button>
+      </div>
+
+      <!-- ============== TAB 1: SALES AGENT ============== -->
+      <div id="salesTab" class="tab-content active">
+        <div class="chat-wrapper">
+          <!-- Settings Panel -->
+          <div class="settings-panel">
+            <h3><i class="fas fa-cog"></i> Settings</h3>
+
+            <div class="mb-4">
+              <label class="form-label">Business Name</label>
+              <input
+                type="text"
+                id="businessName"
+                class="form-control"
+                value="My Store"
+                placeholder="Enter your business name"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Select Sector</label>
+              <select id="sectorSelect" class="form-select">
+                <option value="restaurant">🍽️ Restaurant & Cafe</option>
+                <option value="fashion_retail" selected>
+                  👗 Fashion Retail
+                </option>
+                <option value="electronics">📱 Electronics</option>
+                <option value="pharmacy">💊 Pharmacy</option>
+                <option value="grocery">🛒 Grocery</option>
+                <option value="home_services">🔧 Home Services</option>
+                <option value="education">📚 Education</option>
+                <option value="clinic">💆 Clinic & Beauty</option>
+                <option value="travel">✈️ Travel & Tourism</option>
+                <option value="repair_workshop">🔧 Repair Workshop</option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Language</label>
+              <select id="langSelect" class="form-select">
+                <option value="auto">🌐 Auto-detect</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="ar">🇪🇬 العربية</option>
+              </select>
+            </div>
+
+            <hr />
+
+            <div class="mb-3">
+              <button
+                class="btn btn-outline-primary w-100 mb-2"
+                onclick="showCatalog()"
+              >
+                <i class="fas fa-list"></i> View Catalog
+              </button>
+              <button
+                class="btn btn-outline-secondary w-100"
+                onclick="clearChat()"
+              >
+                <i class="fas fa-trash"></i> Clear Chat
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat Container -->
+          <div class="chat-container">
+            <div class="chat-header">
+              <div class="avatar">
+                <i class="fas fa-headset"></i>
+              </div>
+              <div class="info">
+                <h4 id="agentName">Sales Assistant</h4>
+                <span
+                  ><i class="fas fa-circle text-success"></i> Online | Ready to
+                  help</span
+                >
+              </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+              <!-- Welcome Message -->
+              <div class="message assistant">
+                <div>
+                  <div class="message-content">
+                    👋 Welcome! I'm your digital sales assistant. How can I help
+                    you today?
+                    <br /><br />
+                    أهلاً بيك! أنا مساعدك الرقمي للمبيعات. كيف أقدر أساعدك؟
+                  </div>
+                  <div class="message-time">Just now</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span style="margin-left: 10px; color: var(--secondary)"
+                >Assistant is typing...</span
+              >
+            </div>
+
+            <div class="chat-input">
+              <div class="quick-actions">
+                <button
+                  class="quick-btn"
+                  onclick="sendQuick('Show me the catalog')"
+                  title="Catalog"
+                >
+                  📋
+                </button>
+                <button
+                  class="quick-btn"
+                  onclick="sendQuick('What are your prices?')"
+                  title="Prices"
+                >
+                  💰
+                </button>
+                <button
+                  class="quick-btn"
+                  onclick="sendQuick('Do you deliver?')"
+                  title="Delivery"
+                >
+                  🚚
+                </button>
+                <button
+                  class="quick-btn"
+                  onclick="sendQuick('I want to order')"
+                  title="Order"
+                >
+                  🛒
+                </button>
+              </div>
+              <div class="input-group">
+                <textarea
+                  id="messageInput"
+                  placeholder="Type your message... | اكتب رسالتك..."
+                  onkeydown="handleKeyPress(event)"
+                  rows="1"
+                ></textarea>
+                <button onclick="sendMessage()" id="sendBtn">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============== TAB 2: ACCOUNTING ============== -->
+      <div id="accountingTab" class="tab-content">
+        <div class="accounting-wrapper">
+          <!-- Expense Entry Panel -->
+          <div class="accounting-panel expense-form-panel">
+            <h3><i class="fas fa-receipt"></i> Add Expense</h3>
+
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <div class="category-grid" id="categoryGrid">
+                <button
+                  class="category-btn"
+                  data-category="Rent"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">🏠</span>
+                  <span class="name">Rent</span>
+                </button>
+                <button
+                  class="category-btn"
+                  data-category="Utilities"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">💡</span>
+                  <span class="name">Utilities</span>
+                </button>
+                <button
+                  class="category-btn"
+                  data-category="Salaries"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">👥</span>
+                  <span class="name">Salaries</span>
+                </button>
+                <button
+                  class="category-btn"
+                  data-category="Packaging"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">📦</span>
+                  <span class="name">Packaging</span>
+                </button>
+                <button
+                  class="category-btn"
+                  data-category="Supplies"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">🛒</span>
+                  <span class="name">Supplies</span>
+                </button>
+                <button
+                  class="category-btn"
+                  data-category="Marketing"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">📢</span>
+                  <span class="name">Marketing</span>
+                </button>
+                <button
+                  class="category-btn"
+                  data-category="Transport"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">🚚</span>
+                  <span class="name">Transport</span>
+                </button>
+                <button
+                  class="category-btn"
+                  data-category="Maintenance"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">🔧</span>
+                  <span class="name">Maintenance</span>
+                </button>
+                <button
+                  class="category-btn"
+                  data-category="Other"
+                  onclick="selectCategory(this)"
+                >
+                  <span class="icon">📋</span>
+                  <span class="name">Other</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Amount (EGP)</label>
+              <input
+                type="number"
+                id="expenseAmount"
+                class="form-control"
+                placeholder="0.00"
+                min="0"
+                step="0.01"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <input
+                type="text"
+                id="expenseDescription"
+                class="form-control"
+                placeholder="e.g., Shop rent for January"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Date</label>
+              <input type="date" id="expenseDate" class="form-control" />
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Notes (optional)</label>
+              <textarea
+                id="expenseNotes"
+                class="form-control"
+                rows="2"
+                placeholder="Any additional notes..."
+              ></textarea>
+            </div>
+
+            <button class="btn-success-custom w-100" onclick="addExpense()">
+              <i class="fas fa-plus"></i> Add Expense
+            </button>
+          </div>
+
+          <!-- Reports Panel -->
+          <div class="accounting-panel reports-panel">
+            <h3><i class="fas fa-chart-line"></i> Financial Reports</h3>
+
+            <!-- Report Type Selector -->
+            <div class="report-type-selector">
+              <button
+                class="report-type-btn active"
+                onclick="selectReportType('daily')"
+                id="btnDaily"
+              >
+                📅 Daily
+              </button>
+              <button
+                class="report-type-btn"
+                onclick="selectReportType('weekly')"
+                id="btnWeekly"
+              >
+                📆 Weekly
+              </button>
+            </div>
+
+            <!-- Date Picker -->
+            <div class="date-picker-row">
+              <input type="date" id="reportDate" class="form-control" />
+              <button class="btn-primary-custom" onclick="loadReport()">
+                <i class="fas fa-search"></i> Load
+              </button>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+              <div class="summary-card revenue">
+                <div class="icon">💰</div>
+                <div class="value" id="totalRevenue">0.00</div>
+                <div class="label">Total Revenue (EGP)</div>
+              </div>
+              <div class="summary-card expenses">
+                <div class="icon">💸</div>
+                <div class="value" id="totalExpenses">0.00</div>
+                <div class="label">Total Expenses (EGP)</div>
+              </div>
+              <div class="summary-card profit">
+                <div class="icon">📈</div>
+                <div class="value" id="netProfit">0.00</div>
+                <div class="label">Net Profit (EGP)</div>
+              </div>
+            </div>
+
+            <!-- Transactions List -->
+            <h5 style="color: var(--secondary); margin-bottom: 15px">
+              <i class="fas fa-list"></i> Recent Transactions
+            </h5>
+            <div class="transaction-list" id="transactionList">
+              <div
+                style="
+                  text-align: center;
+                  color: var(--secondary);
+                  padding: 30px;
+                "
+              >
+                <i
+                  class="fas fa-chart-pie"
+                  style="font-size: 3rem; margin-bottom: 10px"
+                ></i>
+                <p>Select a date and click Load to view transactions</p>
+              </div>
+            </div>
+
+            <!-- Summary Text -->
+            <div
+              class="summary-text-box"
+              id="summaryTextBox"
+              style="display: none"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ============== STATE ==============
+      let conversationHistory = [];
+      let currentSector = "fashion_retail";
+      let businessName = "My Store";
+      let selectedCategory = null;
+      let currentReportType = "daily";
+
+      // ============== DOM ELEMENTS ==============
+      const chatMessages = document.getElementById("chatMessages");
+      const messageInput = document.getElementById("messageInput");
+      const sendBtn = document.getElementById("sendBtn");
+      const typingIndicator = document.getElementById("typingIndicator");
+      const sectorSelect = document.getElementById("sectorSelect");
+      const businessNameInput = document.getElementById("businessName");
+
+      // ============== INITIALIZATION ==============
+      document.addEventListener("DOMContentLoaded", function () {
+        // Set default date to today
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("expenseDate").value = today;
+        document.getElementById("reportDate").value = today;
+
+        // Initialize business name sync
+        businessNameInput.addEventListener("change", (e) => {
+          businessName = e.target.value;
+        });
+
+        sectorSelect.addEventListener("change", (e) => {
+          currentSector = e.target.value;
+          clearChat();
+          addMessage(
+            "assistant",
+            `Switched to ${sectorSelect.options[sectorSelect.selectedIndex].text} mode. How can I help you?`,
+          );
+        });
+
+        messageInput.focus();
+      });
+
+      // ============== TAB SWITCHING ==============
+      function switchTab(tab) {
+        // Update tab buttons
+        document
+          .getElementById("tabSales")
+          .classList.toggle("active", tab === "sales");
+        document
+          .getElementById("tabAccounting")
+          .classList.toggle("active", tab === "accounting");
+
+        // Update tab content
+        document
+          .getElementById("salesTab")
+          .classList.toggle("active", tab === "sales");
+        document
+          .getElementById("accountingTab")
+          .classList.toggle("active", tab === "accounting");
+
+        // Load report when switching to accounting
+        if (tab === "accounting") {
+          loadReport();
+        }
+      }
+
+      // ============== TOAST NOTIFICATIONS ==============
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+          <i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i>
+          <span>${message}</span>
+        `;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          toast.style.animation = "slideIn 0.3s ease reverse";
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+
+      // ============== CHAT FUNCTIONS ==============
+      function handleKeyPress(e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+        // Auto-resize textarea
+        setTimeout(() => {
+          messageInput.style.height = "auto";
+          messageInput.style.height =
+            Math.min(messageInput.scrollHeight, 150) + "px";
+        }, 0);
+      }
+
+      function sendQuick(text) {
+        messageInput.value = text;
+        sendMessage();
+      }
+
+      function addMessage(role, content) {
+        const time = new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        const isRTL = /[\u0600-\u06FF]/.test(content);
+
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${role}`;
+        messageDiv.innerHTML = `
+          <div>
+            <div class="message-content ${isRTL ? "rtl" : ""}">${formatMessage(content)}</div>
+            <div class="message-time">${time}</div>
+          </div>
+        `;
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function formatMessage(content) {
+        content = content.replace(/\n/g, "<br>");
+        content = content.replace(
+          /(ORD-[A-Z0-9]+)/g,
+          '<strong style="color: #10b981;">$1</strong>',
+        );
+        content = content.replace(
+          /(\d+)\s*(EGP|جنيه)/g,
+          "<strong>$1 $2</strong>",
+        );
+        return content;
+      }
+
+      async function sendMessage() {
+        const message = messageInput.value.trim();
+        if (!message) return;
+
+        addMessage("user", message);
+        conversationHistory.push({ role: "user", content: message });
+
+        messageInput.value = "";
+        messageInput.style.height = "auto";
+        sendBtn.disabled = true;
+        typingIndicator.classList.add("show");
+
+        try {
+          const response = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              message: message,
+              sector_id: currentSector,
+              business_name: businessName,
+              history: conversationHistory,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            addMessage("assistant", data.message);
+            conversationHistory.push({
+              role: "assistant",
+              content: data.message,
+            });
+
+            if (data.order_id) {
+              console.log("Order confirmed:", data.order_id);
+              showToast(
+                `Order ${data.order_id} confirmed! Revenue logged.`,
+                "success",
+              );
+            }
+          } else {
+            addMessage(
+              "assistant",
+              "❌ Sorry, something went wrong. Please try again.",
+            );
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          addMessage(
+            "assistant",
+            "❌ Connection error. Please check your internet and try again.",
+          );
+        }
+
+        typingIndicator.classList.remove("show");
+        sendBtn.disabled = false;
+        messageInput.focus();
+      }
+
+      function showCatalog() {
+        sendQuick("Show me your full catalog with prices");
+      }
+
+      function clearChat() {
+        chatMessages.innerHTML = "";
+        conversationHistory = [];
+        addMessage(
+          "assistant",
+          "👋 Welcome! I'm your digital sales assistant. How can I help you today?\n\nأهلاً بيك! أنا مساعدك الرقمي للمبيعات. كيف أقدر أساعدك؟",
+        );
+      }
+
+      // ============== ACCOUNTING FUNCTIONS ==============
+      function selectCategory(btn) {
+        // Remove selection from all
+        document
+          .querySelectorAll(".category-btn")
+          .forEach((b) => b.classList.remove("selected"));
+        // Add selection to clicked
+        btn.classList.add("selected");
+        selectedCategory = btn.dataset.category;
+      }
+
+      async function addExpense() {
+        if (!selectedCategory) {
+          showToast("Please select a category", "error");
+          return;
+        }
+
+        const amount = document.getElementById("expenseAmount").value;
+        const description = document.getElementById("expenseDescription").value;
+        const date = document.getElementById("expenseDate").value;
+        const notes = document.getElementById("expenseNotes").value;
+
+        if (!amount || amount <= 0) {
+          showToast("Please enter a valid amount", "error");
+          return;
+        }
+
+        if (!description) {
+          showToast("Please enter a description", "error");
+          return;
+        }
+
+        try {
+          const response = await fetch("/api/accounting/expense", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              category: selectedCategory,
+              amount: parseFloat(amount),
+              description: description,
+              date: date,
+              notes: notes,
+              business_name: businessName,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            showToast(
+              `Expense added: ${selectedCategory} - ${amount} EGP`,
+              "success",
+            );
+
+            // Clear form
+            document.getElementById("expenseAmount").value = "";
+            document.getElementById("expenseDescription").value = "";
+            document.getElementById("expenseNotes").value = "";
+            document
+              .querySelectorAll(".category-btn")
+              .forEach((b) => b.classList.remove("selected"));
+            selectedCategory = null;
+
+            // Reload report
+            loadReport();
+          } else {
+            showToast(data.error || "Failed to add expense", "error");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          showToast("Connection error", "error");
+        }
+      }
+
+      function selectReportType(type) {
+        currentReportType = type;
+        document
+          .getElementById("btnDaily")
+          .classList.toggle("active", type === "daily");
+        document
+          .getElementById("btnWeekly")
+          .classList.toggle("active", type === "weekly");
+        loadReport();
+      }
+
+      async function loadReport() {
+        const reportDate = document.getElementById("reportDate").value;
+        if (!reportDate) return;
+
+        const endpoint =
+          currentReportType === "daily"
+            ? `/api/accounting/daily?date=${reportDate}&business_name=${encodeURIComponent(businessName)}`
+            : `/api/accounting/weekly?weekStart=${reportDate}&business_name=${encodeURIComponent(businessName)}`;
+
+        try {
+          const response = await fetch(endpoint);
+          const data = await response.json();
+
+          if (data.success) {
+            updateSummaryCards(data.summary);
+            updateTransactionList(data.summary);
+            updateSummaryText(data.summary_text);
+          }
+        } catch (error) {
+          console.error("Error loading report:", error);
+        }
+      }
+
+      function updateSummaryCards(summary) {
+        document.getElementById("totalRevenue").textContent =
+          summary.total_revenue.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+          });
+        document.getElementById("totalExpenses").textContent =
+          summary.total_expenses.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+          });
+        document.getElementById("netProfit").textContent =
+          summary.net_profit.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+          });
+
+        // Update profit card color based on value
+        const profitCard = document.querySelector(".summary-card.profit");
+        if (summary.net_profit < 0) {
+          profitCard.style.background =
+            "linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)";
+        } else {
+          profitCard.style.background =
+            "linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%)";
+        }
+      }
+
+      function updateTransactionList(summary) {
+        const container = document.getElementById("transactionList");
+
+        const transactions = [
+          ...(summary.revenue_transactions || []).map((t) => ({
+            ...t,
+            type: "revenue",
+          })),
+          ...(summary.expense_transactions || []).map((t) => ({
+            ...t,
+            type: "expense",
+          })),
+        ];
+
+        if (transactions.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; color: var(--secondary); padding: 30px;">
+              <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 10px;"></i>
+              <p>No transactions for this period</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Sort by timestamp descending
+        transactions.sort(
+          (a, b) => new Date(b.timestamp) - new Date(a.timestamp),
+        );
+
+        container.innerHTML = transactions
+          .map(
+            (t) => `
+          <div class="transaction-item ${t.type}">
+            <div class="transaction-info">
+              <div class="title">
+                ${
+                  t.type === "revenue"
+                    ? `📦 ${t.items_summary || "Order " + t.order_id}`
+                    : `${getCategoryIcon(t.category)} ${t.category}: ${t.description}`
+                }
+              </div>
+              <div class="meta">
+                ${t.type === "revenue" ? t.order_id : t.expense_id} • 
+                ${new Date(t.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+              </div>
+            </div>
+            <div class="transaction-amount ${t.type === "revenue" ? "positive" : "negative"}">
+              ${t.type === "revenue" ? "+" : "-"}${t.amount.toLocaleString()} EGP
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      function getCategoryIcon(category) {
+        const icons = {
+          Rent: "🏠",
+          Utilities: "💡",
+          Salaries: "👥",
+          Packaging: "📦",
+          Supplies: "🛒",
+          Marketing: "📢",
+          Transport: "🚚",
+          Maintenance: "🔧",
+          Other: "📋",
+        };
+        return icons[category] || "📋";
+      }
+
+      function updateSummaryText(text) {
+        const box = document.getElementById("summaryTextBox");
+        if (text) {
+          box.textContent = text;
+          box.style.display = "block";
+        } else {
+          box.style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>

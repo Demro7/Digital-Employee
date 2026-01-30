@@ -1,0 +1,56 @@
+{
+  "sector_id": "electronics",
+  "sector_name": {
+    "en": "Electronics & Accessories",
+    "ar": "إلكترونيات وإكسسوارات"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 📱 Looking for gadgets? I'm here to help!",
+    "ar": "أهلاً بك في {business_name}! 📱 بتدور على أجهزة؟ أنا هنا أساعدك!"
+  },
+  "catalog": [
+    {"id": "E001", "name_en": "Phone Case", "name_ar": "جراب موبايل", "price": 150, "unit": "piece"},
+    {"id": "E002", "name_en": "Wireless Earbuds", "name_ar": "سماعات لاسلكية", "price": 650, "unit": "piece"},
+    {"id": "E003", "name_en": "Power Bank 10000mAh", "name_ar": "باور بانك 10000", "price": 450, "unit": "piece"},
+    {"id": "E004", "name_en": "USB-C Cable", "name_ar": "كابل USB-C", "price": 80, "unit": "piece"},
+    {"id": "E005", "name_en": "Screen Protector", "name_ar": "واقي شاشة", "price": 100, "unit": "piece"},
+    {"id": "E006", "name_en": "Bluetooth Speaker", "name_ar": "سبيكر بلوتوث", "price": 550, "unit": "piece"},
+    {"id": "E007", "name_en": "Wireless Mouse", "name_ar": "ماوس لاسلكي", "price": 280, "unit": "piece"},
+    {"id": "E008", "name_en": "Wired Keyboard", "name_ar": "كيبورد سلكي", "price": 220, "unit": "piece"},
+    {"id": "E009", "name_en": "USB Hub 4 Ports", "name_ar": "USB Hub 4 منافذ", "price": 180, "unit": "piece"},
+    {"id": "E010", "name_en": "HDMI Cable 2m", "name_ar": "كابل HDMI 2 متر", "price": 120, "unit": "piece"},
+    {"id": "E011", "name_en": "Laptop Stand", "name_ar": "حامل لابتوب", "price": 350, "unit": "piece"},
+    {"id": "E012", "name_en": "Webcam HD", "name_ar": "كاميرا ويب HD", "price": 480, "unit": "piece"},
+    {"id": "E013", "name_en": "Microphone USB", "name_ar": "ميكروفون USB", "price": 320, "unit": "piece"},
+    {"id": "E014", "name_en": "Power Bank 20000mAh", "name_ar": "باور بانك 20000", "price": 750, "unit": "piece"},
+    {"id": "E015", "name_en": "Smartwatch", "name_ar": "ساعة ذكية", "price": 1200, "unit": "piece"},
+    {"id": "E016", "name_en": "Fitness Band", "name_ar": "سوار رياضي", "price": 450, "unit": "piece"},
+    {"id": "E017", "name_en": "Car Phone Holder", "name_ar": "حامل موبايل للسيارة", "price": 120, "unit": "piece"},
+    {"id": "E018", "name_en": "Car Charger", "name_ar": "شاحن سيارة", "price": 150, "unit": "piece"},
+    {"id": "E019", "name_en": "Wireless Charger", "name_ar": "شاحن لاسلكي", "price": 380, "unit": "piece"},
+    {"id": "E020", "name_en": "AUX Cable", "name_ar": "كابل AUX", "price": 45, "unit": "piece"},
+    {"id": "E021", "name_en": "Memory Card 64GB", "name_ar": "كارت ميموري 64 جيجا", "price": 180, "unit": "piece"},
+    {"id": "E022", "name_en": "Memory Card 128GB", "name_ar": "كارت ميموري 128 جيجا", "price": 320, "unit": "piece"},
+    {"id": "E023", "name_en": "USB Flash 32GB", "name_ar": "فلاشة 32 جيجا", "price": 120, "unit": "piece"},
+    {"id": "E024", "name_en": "USB Flash 64GB", "name_ar": "فلاشة 64 جيجا", "price": 180, "unit": "piece"},
+    {"id": "E025", "name_en": "Gaming Headset", "name_ar": "سماعة جيمنج", "price": 850, "unit": "piece"},
+    {"id": "E026", "name_en": "Mouse Pad XL", "name_ar": "ماوس باد كبير", "price": 150, "unit": "piece"},
+    {"id": "E027", "name_en": "Tablet Stand", "name_ar": "حامل تابلت", "price": 180, "unit": "piece"},
+    {"id": "E028", "name_en": "LED Ring Light", "name_ar": "رينج لايت LED", "price": 280, "unit": "piece"},
+    {"id": "E029", "name_en": "Tripod Stand", "name_ar": "حامل ثلاثي", "price": 220, "unit": "piece"},
+    {"id": "E030", "name_en": "Selfie Stick", "name_ar": "عصا سيلفي", "price": 120, "unit": "piece"}
+  ],
+  "faqs": [
+    {"keywords": ["warranty", "ضمان"], "answer_en": "All products have 1-year warranty against manufacturing defects.", "answer_ar": "كل المنتجات عليها ضمان سنة ضد عيوب الصناعة."},
+    {"keywords": ["delivery", "توصيل"], "answer_en": "Delivery in 1-2 days. Free for orders above 300 EGP.", "answer_ar": "التوصيل خلال 1-2 يوم. مجاني للطلبات فوق 300 جنيه."},
+    {"keywords": ["payment", "دفع"], "answer_en": "Cash on delivery, Vodafone Cash, or InstaPay.", "answer_ar": "كاش عند الاستلام، فودافون كاش، أو إنستاباي."}
+  ],
+  "order_flow": {
+    "ask_items": {"en": "What would you like to order?", "ar": "تحب تطلب إيه؟"},
+    "ask_quantity": {"en": "How many {item}?", "ar": "كام {item}؟"},
+    "ask_phone": {"en": "Please share your phone number:", "ar": "ممكن رقم تليفونك؟"},
+    "ask_address": {"en": "What's your delivery address?", "ar": "عنوان التوصيل إيه؟"},
+    "confirm_order": {"en": "Please confirm your order:\n{order_summary}\nTotal: {total} EGP\n\nReply YES to confirm or NO to cancel.", "ar": "تأكيد الطلب:\n{order_summary}\nالإجمالي: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."},
+    "order_confirmed": {"en": "✅ Order confirmed! Order #{order_id} will arrive in 1-2 days. Thank you!", "ar": "✅ تم تأكيد الطلب! طلب رقم #{order_id} هيوصل خلال 1-2 يوم. شكراً!"}
+  }
+}

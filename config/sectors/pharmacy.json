@@ -1,0 +1,56 @@
+{
+  "sector_id": "pharmacy",
+  "sector_name": {
+    "en": "Pharmacy",
+    "ar": "صيدلية"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 💊 How can I assist you today?",
+    "ar": "أهلاً بك في {business_name}! 💊 كيف أقدر أساعدك؟"
+  },
+  "catalog": [
+    {"id": "P001", "name_en": "Panadol Extra", "name_ar": "بنادول إكسترا", "price": 45, "unit": "box"},
+    {"id": "P002", "name_en": "Vitamin C 1000mg", "name_ar": "فيتامين سي 1000", "price": 85, "unit": "box"},
+    {"id": "P003", "name_en": "Hand Sanitizer", "name_ar": "معقم يدين", "price": 35, "unit": "bottle"},
+    {"id": "P004", "name_en": "Face Masks (50pcs)", "name_ar": "كمامات (50 قطعة)", "price": 120, "unit": "box"},
+    {"id": "P005", "name_en": "Blood Pressure Monitor", "name_ar": "جهاز ضغط", "price": 650, "unit": "device"},
+    {"id": "P006", "name_en": "Brufen 400mg", "name_ar": "بروفين 400", "price": 38, "unit": "box"},
+    {"id": "P007", "name_en": "Antinal", "name_ar": "أنتينال", "price": 25, "unit": "box"},
+    {"id": "P008", "name_en": "Congestal", "name_ar": "كونجستال", "price": 42, "unit": "box"},
+    {"id": "P009", "name_en": "Vitamin D3", "name_ar": "فيتامين د3", "price": 95, "unit": "box"},
+    {"id": "P010", "name_en": "Omega 3", "name_ar": "أوميجا 3", "price": 120, "unit": "box"},
+    {"id": "P011", "name_en": "Calcium + D3", "name_ar": "كالسيوم + د3", "price": 75, "unit": "box"},
+    {"id": "P012", "name_en": "Iron Supplement", "name_ar": "حديد", "price": 55, "unit": "box"},
+    {"id": "P013", "name_en": "Zinc Tablets", "name_ar": "أقراص زنك", "price": 65, "unit": "box"},
+    {"id": "P014", "name_en": "Multivitamin", "name_ar": "ملتي فيتامين", "price": 150, "unit": "box"},
+    {"id": "P015", "name_en": "Glucose Monitor", "name_ar": "جهاز قياس السكر", "price": 450, "unit": "device"},
+    {"id": "P016", "name_en": "Glucose Strips (50)", "name_ar": "شرائط سكر (50)", "price": 280, "unit": "box"},
+    {"id": "P017", "name_en": "Digital Thermometer", "name_ar": "ترمومتر ديجيتال", "price": 85, "unit": "piece"},
+    {"id": "P018", "name_en": "Bandages Pack", "name_ar": "لاصقات جروح", "price": 25, "unit": "pack"},
+    {"id": "P019", "name_en": "Cotton Roll", "name_ar": "قطن طبي", "price": 20, "unit": "roll"},
+    {"id": "P020", "name_en": "Antiseptic Solution", "name_ar": "مطهر جروح", "price": 35, "unit": "bottle"},
+    {"id": "P021", "name_en": "Eye Drops", "name_ar": "قطرة عين", "price": 45, "unit": "bottle"},
+    {"id": "P022", "name_en": "Nasal Spray", "name_ar": "بخاخ أنف", "price": 55, "unit": "bottle"},
+    {"id": "P023", "name_en": "Cough Syrup", "name_ar": "شراب كحة", "price": 48, "unit": "bottle"},
+    {"id": "P024", "name_en": "Digestive Enzymes", "name_ar": "إنزيمات هاضمة", "price": 65, "unit": "box"},
+    {"id": "P025", "name_en": "Probiotics", "name_ar": "بروبيوتيك", "price": 180, "unit": "box"},
+    {"id": "P026", "name_en": "Sunscreen SPF50", "name_ar": "واقي شمس 50", "price": 220, "unit": "tube"},
+    {"id": "P027", "name_en": "Moisturizing Cream", "name_ar": "كريم مرطب", "price": 85, "unit": "tube"},
+    {"id": "P028", "name_en": "Hair Vitamins", "name_ar": "فيتامينات للشعر", "price": 250, "unit": "box"},
+    {"id": "P029", "name_en": "Collagen Supplement", "name_ar": "كولاجين", "price": 320, "unit": "box"},
+    {"id": "P030", "name_en": "Medical Gloves (100)", "name_ar": "قفازات طبية (100)", "price": 95, "unit": "box"}
+  ],
+  "faqs": [
+    {"keywords": ["delivery", "توصيل"], "answer_en": "Free delivery within 3km. 15 EGP for farther areas.", "answer_ar": "توصيل مجاني في نطاق 3 كم. 15 جنيه للمناطق الأبعد."},
+    {"keywords": ["prescription", "روشتة", "doctor"], "answer_en": "For prescription medicines, please send a photo of your prescription.", "answer_ar": "للأدوية بروشتة، ابعتلنا صورة الروشتة."},
+    {"keywords": ["hours", "مواعيد", "open"], "answer_en": "We're open 24/7!", "answer_ar": "إحنا مفتوحين 24 ساعة!"}
+  ],
+  "order_flow": {
+    "ask_items": {"en": "What medicine or product do you need?", "ar": "محتاج دواء أو منتج إيه؟"},
+    "ask_quantity": {"en": "How many {item}?", "ar": "كام {item}؟"},
+    "ask_phone": {"en": "Please share your phone number:", "ar": "ممكن رقم تليفونك؟"},
+    "ask_address": {"en": "What's your delivery address?", "ar": "عنوان التوصيل إيه؟"},
+    "confirm_order": {"en": "Please confirm your order:\n{order_summary}\nTotal: {total} EGP\n\nReply YES to confirm or NO to cancel.", "ar": "تأكيد الطلب:\n{order_summary}\nالإجمالي: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."},
+    "order_confirmed": {"en": "✅ Order confirmed! Order #{order_id} will arrive in 30-60 mins. Thank you!", "ar": "✅ تم تأكيد الطلب! طلب رقم #{order_id} هيوصل خلال 30-60 دقيقة. شكراً!"}
+  }
+}

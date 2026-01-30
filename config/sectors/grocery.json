@@ -1,0 +1,60 @@
+{
+  "sector_id": "grocery",
+  "sector_name": {
+    "en": "Grocery / Supermarket",
+    "ar": "بقالة / سوبرماركت"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 🛒 What do you need today?",
+    "ar": "أهلاً بك في {business_name}! 🛒 محتاج إيه النهارده؟"
+  },
+  "catalog": [
+    {"id": "G001", "name_en": "Milk 1L", "name_ar": "لبن 1 لتر", "price": 35, "unit": "bottle"},
+    {"id": "G002", "name_en": "Eggs (30)", "name_ar": "بيض (30 بيضة)", "price": 120, "unit": "tray"},
+    {"id": "G003", "name_en": "Bread", "name_ar": "عيش فينو", "price": 15, "unit": "pack"},
+    {"id": "G004", "name_en": "Rice 1kg", "name_ar": "أرز 1 كيلو", "price": 45, "unit": "kg"},
+    {"id": "G005", "name_en": "Cooking Oil 1L", "name_ar": "زيت طبخ 1 لتر", "price": 85, "unit": "bottle"},
+    {"id": "G006", "name_en": "Sugar 1kg", "name_ar": "سكر 1 كيلو", "price": 32, "unit": "kg"},
+    {"id": "G007", "name_en": "Flour 1kg", "name_ar": "دقيق 1 كيلو", "price": 28, "unit": "kg"},
+    {"id": "G008", "name_en": "Pasta 500g", "name_ar": "مكرونة 500 جرام", "price": 22, "unit": "pack"},
+    {"id": "G009", "name_en": "Tomato Paste", "name_ar": "صلصة طماطم", "price": 18, "unit": "can"},
+    {"id": "G010", "name_en": "Cheese 250g", "name_ar": "جبنة 250 جرام", "price": 65, "unit": "pack"},
+    {"id": "G011", "name_en": "Butter 200g", "name_ar": "زبدة 200 جرام", "price": 55, "unit": "pack"},
+    {"id": "G012", "name_en": "Yogurt 1kg", "name_ar": "زبادي 1 كيلو", "price": 42, "unit": "tub"},
+    {"id": "G013", "name_en": "Chicken 1kg", "name_ar": "فراخ 1 كيلو", "price": 95, "unit": "kg"},
+    {"id": "G014", "name_en": "Beef 1kg", "name_ar": "لحمة بقري 1 كيلو", "price": 280, "unit": "kg"},
+    {"id": "G015", "name_en": "Fish 1kg", "name_ar": "سمك 1 كيلو", "price": 120, "unit": "kg"},
+    {"id": "G016", "name_en": "Potatoes 1kg", "name_ar": "بطاطس 1 كيلو", "price": 18, "unit": "kg"},
+    {"id": "G017", "name_en": "Tomatoes 1kg", "name_ar": "طماطم 1 كيلو", "price": 15, "unit": "kg"},
+    {"id": "G018", "name_en": "Onions 1kg", "name_ar": "بصل 1 كيلو", "price": 12, "unit": "kg"},
+    {"id": "G019", "name_en": "Garlic 250g", "name_ar": "ثوم 250 جرام", "price": 20, "unit": "pack"},
+    {"id": "G020", "name_en": "Lemon 1kg", "name_ar": "ليمون 1 كيلو", "price": 25, "unit": "kg"},
+    {"id": "G021", "name_en": "Orange Juice 1L", "name_ar": "عصير برتقال 1 لتر", "price": 38, "unit": "bottle"},
+    {"id": "G022", "name_en": "Mineral Water 1.5L", "name_ar": "مياه معدنية 1.5 لتر", "price": 8, "unit": "bottle"},
+    {"id": "G023", "name_en": "Soft Drink 330ml", "name_ar": "مشروب غازي 330 مل", "price": 12, "unit": "can"},
+    {"id": "G024", "name_en": "Tea 250g", "name_ar": "شاي 250 جرام", "price": 45, "unit": "pack"},
+    {"id": "G025", "name_en": "Coffee 200g", "name_ar": "قهوة 200 جرام", "price": 85, "unit": "pack"},
+    {"id": "G026", "name_en": "Nescafe 50g", "name_ar": "نسكافيه 50 جرام", "price": 65, "unit": "jar"},
+    {"id": "G027", "name_en": "Honey 500g", "name_ar": "عسل 500 جرام", "price": 120, "unit": "jar"},
+    {"id": "G028", "name_en": "Jam 350g", "name_ar": "مربى 350 جرام", "price": 35, "unit": "jar"},
+    {"id": "G029", "name_en": "Biscuits", "name_ar": "بسكويت", "price": 15, "unit": "pack"},
+    {"id": "G030", "name_en": "Chips", "name_ar": "شيبسي", "price": 18, "unit": "pack"},
+    {"id": "G031", "name_en": "Chocolate Bar", "name_ar": "شوكولاتة", "price": 25, "unit": "piece"},
+    {"id": "G032", "name_en": "Laundry Detergent 1kg", "name_ar": "مسحوق غسيل 1 كيلو", "price": 55, "unit": "pack"},
+    {"id": "G033", "name_en": "Dish Soap", "name_ar": "صابون أطباق", "price": 28, "unit": "bottle"},
+    {"id": "G034", "name_en": "Tissue Box", "name_ar": "مناديل ورقية", "price": 22, "unit": "box"},
+    {"id": "G035", "name_en": "Toilet Paper (4 rolls)", "name_ar": "ورق تواليت (4 لفات)", "price": 35, "unit": "pack"}
+  ],
+  "faqs": [
+    {"keywords": ["delivery", "توصيل"], "answer_en": "Free delivery for orders above 200 EGP. Otherwise 10 EGP.", "answer_ar": "توصيل مجاني للطلبات فوق 200 جنيه. غير كده 10 جنيه."},
+    {"keywords": ["hours", "مواعيد"], "answer_en": "Open from 7 AM to 11 PM.", "answer_ar": "مفتوحين من 7 الصبح لـ 11 بالليل."}
+  ],
+  "order_flow": {
+    "ask_items": {"en": "What would you like to order?", "ar": "تحب تطلب إيه؟"},
+    "ask_quantity": {"en": "How many {item}?", "ar": "كام {item}؟"},
+    "ask_phone": {"en": "Please share your phone number:", "ar": "ممكن رقم تليفونك؟"},
+    "ask_address": {"en": "What's your delivery address?", "ar": "عنوان التوصيل إيه؟"},
+    "confirm_order": {"en": "Please confirm your order:\n{order_summary}\nTotal: {total} EGP\n\nReply YES to confirm or NO to cancel.", "ar": "تأكيد الطلب:\n{order_summary}\nالإجمالي: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."},
+    "order_confirmed": {"en": "✅ Order confirmed! Order #{order_id} will arrive in 20-40 mins. Thank you!", "ar": "✅ تم تأكيد الطلب! طلب رقم #{order_id} هيوصل خلال 20-40 دقيقة. شكراً!"}
+  }
+}

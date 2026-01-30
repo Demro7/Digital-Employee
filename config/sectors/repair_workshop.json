@@ -1,0 +1,57 @@
+{
+  "sector_id": "repair_workshop",
+  "sector_name": {
+    "en": "Repair Workshop",
+    "ar": "ورشة صيانة"
+  },
+  "welcome_message": {
+    "en": "Welcome to {business_name}! 🔧 What needs fixing?",
+    "ar": "أهلاً بك في {business_name}! 🔧 إيه اللي محتاج تصليح؟"
+  },
+  "catalog": [
+    {"id": "W001", "name_en": "Phone Screen Repair", "name_ar": "تغيير شاشة موبايل", "price": 350, "unit": "service"},
+    {"id": "W002", "name_en": "Laptop Repair", "name_ar": "تصليح لابتوب", "price": 500, "unit": "service"},
+    {"id": "W003", "name_en": "Battery Replacement", "name_ar": "تغيير بطارية", "price": 200, "unit": "service"},
+    {"id": "W004", "name_en": "Data Recovery", "name_ar": "استرجاع بيانات", "price": 400, "unit": "service"},
+    {"id": "W005", "name_en": "Software Installation", "name_ar": "تنزيل برامج", "price": 150, "unit": "service"}
+  ],
+  "faqs": [
+    {
+      "keywords": ["time", "وقت", "كام يوم"],
+      "answer_en": "Most repairs done same day. Complex ones 1-2 days.",
+      "answer_ar": "معظم التصليحات بتخلص نفس اليوم. المعقدة 1-2 يوم."
+    },
+    {
+      "keywords": ["warranty", "ضمان"],
+      "answer_en": "90-day warranty on all repairs.",
+      "answer_ar": "ضمان 90 يوم على كل التصليحات."
+    },
+    {
+      "keywords": ["price", "سعر"],
+      "answer_en": "Prices are estimates. Final price after inspection.",
+      "answer_ar": "الأسعار تقديرية. السعر النهائي بعد الفحص."
+    }
+  ],
+  "order_flow": {
+    "ask_items": {
+      "en": "What device needs repair?",
+      "ar": "إيه الجهاز اللي محتاج تصليح؟"
+    },
+    "ask_details": {
+      "en": "Describe the problem:",
+      "ar": "وصّف المشكلة:"
+    },
+    "ask_phone": {
+      "en": "Please share your phone number:",
+      "ar": "ممكن رقم تليفونك؟"
+    },
+    "confirm_order": {
+      "en": "Please confirm your repair request:\n{order_summary}\nEstimated: {total} EGP\n\nReply YES to confirm or NO to cancel.",
+      "ar": "تأكيد طلب التصليح:\n{order_summary}\nتقديري: {total} جنيه\n\nرد بـ نعم للتأكيد أو لا للإلغاء."
+    },
+    "order_confirmed": {
+      "en": "✅ Request confirmed! Reference #{order_id}. Bring your device or we'll arrange pickup.",
+      "ar": "✅ تم تأكيد الطلب! رقم #{order_id}. هات الجهاز أو هننسق الاستلام."
+    }
+  }
+}

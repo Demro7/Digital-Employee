@@ -1,0 +1,2952 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accounting - Digital Employee</title>
+    <!-- Chart.js for Graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f5f7fa;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header h1 {
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .user-info span {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .logout-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Main Container */
+      .main-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      /* Stats Cards */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .stat-icon {
+        font-size: 2.5rem;
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+      }
+
+      .stat-icon.revenue {
+        background: #d4edda;
+      }
+      .stat-icon.expense {
+        background: #f8d7da;
+      }
+      .stat-icon.profit {
+        background: #d1ecf1;
+      }
+      .stat-icon.orders {
+        background: #fff3cd;
+      }
+
+      .stat-content h3 {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .stat-content .value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+      }
+
+      .stat-content .value.positive {
+        color: #28a745;
+      }
+      .stat-content .value.negative {
+        color: #dc3545;
+      }
+
+      /* Tabs */
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        background: white;
+        padding: 10px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .tab {
+        flex: 1;
+        padding: 15px;
+        text-align: center;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #666;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .tab.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .tab:hover:not(.active) {
+        background: #f0f2f5;
+      }
+
+      /* Content Sections */
+      .content-section {
+        display: none;
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .content-section.active {
+        display: block;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+
+      .section-header h2 {
+        font-size: 1.3rem;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* Forms */
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-group label {
+        font-weight: 600;
+        color: #555;
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 12px 15px;
+        border: 2px solid #eee;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-success {
+        background: #28a745;
+        color: white;
+      }
+
+      .btn-danger {
+        background: #dc3545;
+        color: white;
+      }
+
+      /* Tables */
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #555;
+      }
+
+      tr:hover {
+        background: #f8f9fa;
+      }
+
+      .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .status-confirmed {
+        background: #d4edda;
+        color: #155724;
+      }
+      .status-pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      /* Summary Box */
+      .summary-box {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        font-family: monospace;
+        white-space: pre-wrap;
+        line-height: 1.6;
+      }
+
+      /* Date Filter */
+      .date-filter {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      /* Language Toggle */
+      .lang-toggle {
+        display: flex;
+        gap: 5px;
+        background: #f0f2f5;
+        padding: 5px;
+        border-radius: 8px;
+      }
+
+      .lang-toggle button {
+        padding: 8px 15px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .lang-toggle button.active {
+        background: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Alert Messages */
+      .alert {
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      .alert.success {
+        background: #d4edda;
+        color: #155724;
+        display: block;
+      }
+
+      .alert.error {
+        background: #f8d7da;
+        color: #721c24;
+        display: block;
+      }
+
+      /* Inventory Styles */
+      .inventory-filters {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+
+      .inventory-filters .form-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .inventory-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .inventory-card {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .inventory-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .inventory-card.low-stock {
+        border-color: #dc3545;
+        background: #fff5f5;
+      }
+
+      .inventory-card .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 10px;
+      }
+
+      .inventory-card .item-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 1rem;
+      }
+
+      .inventory-card .item-name-ar {
+        color: #666;
+        font-size: 0.85rem;
+        direction: rtl;
+      }
+
+      .inventory-card .item-id {
+        background: #f0f2f5;
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-size: 0.75rem;
+        color: #666;
+      }
+
+      .inventory-card .item-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin: 10px 0;
+        font-size: 0.9rem;
+      }
+
+      .inventory-card .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .inventory-card .detail-item .label {
+        color: #888;
+      }
+
+      .inventory-card .detail-item .value {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .inventory-card .stock-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-top: 1px solid #eee;
+        margin-top: 10px;
+      }
+
+      .inventory-card .stock-qty {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .inventory-card .stock-qty.low {
+        color: #dc3545;
+      }
+
+      .inventory-card .stock-qty.ok {
+        color: #28a745;
+      }
+
+      .inventory-card .stock-actions {
+        display: flex;
+        gap: 5px;
+      }
+
+      .inventory-card .stock-actions button {
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.2s;
+      }
+
+      .inventory-card .stock-actions .btn-add {
+        background: #d4edda;
+        color: #28a745;
+      }
+
+      .inventory-card .stock-actions .btn-subtract {
+        background: #f8d7da;
+        color: #dc3545;
+      }
+
+      .inventory-card .stock-actions button:hover {
+        transform: scale(1.1);
+      }
+
+      .inventory-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .inventory-stat {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .inventory-stat .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #333;
+      }
+
+      .inventory-stat .stat-label {
+        color: #666;
+        font-size: 0.85rem;
+      }
+
+      .inventory-stat.warning .stat-value {
+        color: #dc3545;
+      }
+
+      /* Modal */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        max-width: 400px;
+        width: 90%;
+      }
+
+      .modal h3 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .modal .form-group {
+        margin-bottom: 15px;
+      }
+
+      .modal .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .modal .modal-actions button {
+        flex: 1;
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          flex-direction: column;
+          gap: 15px;
+          text-align: center;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .tabs {
+          flex-wrap: wrap;
+        }
+
+        .tab {
+          flex: 1 1 45%;
+        }
+
+        .charts-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .inventory-filters {
+          flex-direction: column;
+        }
+
+        .user-info {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+
+      /* Charts Styles */
+      .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .chart-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .chart-card h3 {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .chart-card canvas {
+        max-height: 300px;
+      }
+
+      /* Alert Banner Styles */
+      .alerts-container {
+        margin-bottom: 20px;
+      }
+
+      .alert-banner {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        animation: slideIn 0.3s ease;
+      }
+
+      .alert-banner.warning {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+        border-left: 4px solid #ffc107;
+      }
+
+      .alert-banner.danger {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        border-left: 4px solid #dc3545;
+      }
+
+      .alert-banner.success {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        border-left: 4px solid #28a745;
+      }
+
+      .alert-icon {
+        font-size: 1.5rem;
+      }
+
+      .alert-text {
+        flex: 1;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .alert-btn {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .alert-btn:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* User Management Styles */
+      .user-card {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .user-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-info-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .user-details h4 {
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      .user-details span {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      .role-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .role-badge.customer {
+        background: #d1ecf1;
+        color: #0c5460;
+      }
+
+      .role-badge.accounting {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      /* AI Analysis Styles */
+      .ai-analysis-container {
+        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 20px;
+      }
+
+      .ai-analysis-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .ai-response {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        white-space: pre-wrap;
+        line-height: 1.8;
+        font-size: 1rem;
+      }
+
+      .ai-response h4 {
+        color: #667eea;
+        margin-bottom: 10px;
+      }
+
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-right: 10px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Export Button Styles */
+      .export-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .btn-export {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-export.excel {
+        background: #28a745;
+        color: white;
+      }
+
+      .btn-export.pdf {
+        background: #dc3545;
+        color: white;
+      }
+
+      .btn-export:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Marketing Helper Styles */
+      .marketing-intro {
+        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+
+      .marketing-intro p {
+        margin: 5px 0;
+        font-size: 1.05rem;
+        color: #555;
+      }
+
+      .marketing-form {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+      }
+
+      .btn-marketing {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .btn-marketing:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .marketing-result {
+        background: white;
+        border: 2px solid #667eea;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 25px;
+        animation: slideIn 0.3s ease;
+      }
+
+      .marketing-result-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f2f5;
+      }
+
+      .marketing-result-header h3 {
+        color: #667eea;
+        font-size: 1.3rem;
+      }
+
+      .marketing-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn-copy {
+        padding: 8px 16px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-copy:hover {
+        background: #218838;
+      }
+
+      .marketing-content {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 25px;
+        white-space: pre-wrap;
+        line-height: 1.8;
+        font-size: 1rem;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+
+      .quick-templates {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 12px;
+      }
+
+      .quick-templates h4 {
+        margin-bottom: 15px;
+        color: #555;
+      }
+
+      .template-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .template-btn {
+        padding: 10px 18px;
+        background: white;
+        border: 2px solid #ddd;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .template-btn:hover {
+        border-color: #667eea;
+        background: #667eea10;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .marketing-actions {
+          flex-direction: column;
+        }
+
+        .template-buttons {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <h1>📊 Digital Employee - Accounting</h1>
+      <div class="user-info">
+        <span>👤 {{ user.username }} (Accounting)</span>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <!-- Sector Filter -->
+      <div
+        class="sector-filter-container"
+        style="
+          margin-bottom: 20px;
+          padding: 15px;
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        "
+      >
+        <div
+          style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap"
+        >
+          <label
+            style="
+              color: #fff;
+              font-weight: 600;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            "
+          >
+            <span style="font-size: 1.2em">🏪</span> Filter by Sector:
+          </label>
+          <select
+            id="sector-filter"
+            onchange="onSectorFilterChange()"
+            style="
+              padding: 10px 15px;
+              border-radius: 8px;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              background: #0f0f23;
+              color: #fff;
+              font-size: 14px;
+              min-width: 200px;
+              cursor: pointer;
+            "
+          >
+            <option value="">📊 All Sectors / كل الأقسام</option>
+            {% for sector_id, sector in sectors.items() %}
+            <option value="{{ sector_id }}">
+              {{ sector.icon }} {{ sector.name_en }} - {{ sector.name_ar }}
+            </option>
+            {% endfor %}
+          </select>
+          <span
+            id="sector-filter-status"
+            style="color: #28a745; font-size: 12px"
+          ></span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon revenue">💰</div>
+          <div class="stat-content">
+            <h3>Today's Revenue</h3>
+            <div class="value positive" id="stat-revenue">0.00 EGP</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon expense">💸</div>
+          <div class="stat-content">
+            <h3>Today's Expenses</h3>
+            <div class="value negative" id="stat-expenses">0.00 EGP</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon profit">📈</div>
+          <div class="stat-content">
+            <h3>Net Profit</h3>
+            <div class="value" id="stat-profit">0.00 EGP</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orders">📦</div>
+          <div class="stat-content">
+            <h3>Today's Orders</h3>
+            <div class="value" id="stat-orders">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="dashboard">📊 Dashboard</button>
+        <button class="tab" data-tab="expenses">💸 Add Expense</button>
+        <button class="tab" data-tab="revenue">💰 Add Revenue</button>
+        <button class="tab" data-tab="inventory">📦 Inventory</button>
+        <button class="tab" data-tab="daily">📋 Daily Report</button>
+        <button class="tab" data-tab="weekly">📈 Weekly Report</button>
+        <button class="tab" data-tab="marketing">📣 Marketing</button>
+        <button class="tab" data-tab="users">👥 Users</button>
+        <button class="tab" data-tab="ai-analysis">🤖 AI Analysis</button>
+      </div>
+
+      <!-- Dashboard Section -->
+      <div class="content-section active" id="dashboard-section">
+        <div class="section-header">
+          <h2>📊 Dashboard / لوحة التحكم</h2>
+          <div style="display: flex; gap: 10px">
+            <button class="btn btn-primary" onclick="exportDashboard()">
+              📤 Export PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Low Stock Alerts -->
+        <div
+          id="low-stock-alerts"
+          class="alerts-container"
+          style="display: none"
+        >
+          <div class="alert-banner warning">
+            <span class="alert-icon">⚠️</span>
+            <span class="alert-text" id="low-stock-alert-text"
+              >Low stock items detected!</span
+            >
+            <button
+              class="alert-btn"
+              onclick="document.querySelector('[data-tab=inventory]').click()"
+            >
+              View Inventory
+            </button>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>📈 Revenue vs Expenses (Last 7 Days)</h3>
+            <canvas id="revenueExpenseChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>🥧 Expense Categories</h3>
+            <canvas id="expenseCategoryChart"></canvas>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>📊 Daily Profit Trend</h3>
+            <canvas id="profitTrendChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>🛒 Top Selling Products</h3>
+            <canvas id="topProductsChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Expense Section -->
+      <div class="content-section" id="expenses-section">
+        <div class="section-header">
+          <h2>💸 Add Expense</h2>
+        </div>
+
+        <div id="expense-alert" class="alert"></div>
+
+        <form onsubmit="addExpense(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="expense-category">Category</label>
+              <select id="expense-category" required>
+                <option value="">Select category...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="expense-amount">Amount (EGP)</label>
+              <input
+                type="number"
+                id="expense-amount"
+                step="0.01"
+                min="0.01"
+                required
+                placeholder="0.00"
+              />
+            </div>
+            <div class="form-group">
+              <label for="expense-date">Date</label>
+              <input type="date" id="expense-date" />
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group" style="grid-column: span 2">
+              <label for="expense-description">Description</label>
+              <textarea
+                id="expense-description"
+                rows="2"
+                required
+                placeholder="Enter expense description..."
+              ></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-danger">➕ Add Expense</button>
+        </form>
+      </div>
+
+      <!-- Add Revenue Section -->
+      <div class="content-section" id="revenue-section">
+        <div class="section-header">
+          <h2>💰 Add Manual Revenue</h2>
+        </div>
+
+        <div id="revenue-alert" class="alert"></div>
+
+        <form onsubmit="addRevenue(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="revenue-amount">Amount (EGP)</label>
+              <input
+                type="number"
+                id="revenue-amount"
+                step="0.01"
+                min="0.01"
+                required
+                placeholder="0.00"
+              />
+            </div>
+            <div class="form-group">
+              <label for="revenue-date">Date</label>
+              <input type="date" id="revenue-date" />
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group" style="grid-column: span 2">
+              <label for="revenue-description">Description</label>
+              <textarea
+                id="revenue-description"
+                rows="2"
+                required
+                placeholder="Enter revenue description..."
+              ></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success">➕ Add Revenue</button>
+        </form>
+      </div>
+
+      <!-- Daily Report Section -->
+      <div class="content-section" id="daily-section">
+        <div class="section-header">
+          <h2>� Daily Financial Report</h2>
+          <div class="lang-toggle">
+            <button class="active" data-lang="en">EN</button>
+            <button data-lang="ar">عربي</button>
+          </div>
+        </div>
+
+        <div class="date-filter">
+          <div class="form-group">
+            <label for="daily-date">Select Date</label>
+            <input type="date" id="daily-date" onchange="loadDailyReport()" />
+          </div>
+          <div class="export-buttons">
+            <button class="btn-export excel" onclick="exportDailyCSV()">
+              📊 Export CSV
+            </button>
+            <button class="btn-export pdf" onclick="exportDailyPDF()">
+              📄 Export PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-box" id="daily-summary">Loading...</div>
+      </div>
+
+      <!-- Weekly Report Section -->
+      <div class="content-section" id="weekly-section">
+        <div class="section-header">
+          <h2>📈 Weekly Financial Report</h2>
+          <div class="lang-toggle">
+            <button class="active" data-lang="en">EN</button>
+            <button data-lang="ar">عربي</button>
+          </div>
+        </div>
+
+        <div class="date-filter">
+          <div class="form-group">
+            <label for="weekly-start">Week Starting</label>
+            <input
+              type="date"
+              id="weekly-start"
+              onchange="loadWeeklyReport()"
+            />
+          </div>
+          <div class="export-buttons">
+            <button class="btn-export excel" onclick="exportWeeklyCSV()">
+              📊 Export CSV
+            </button>
+            <button class="btn-export pdf" onclick="exportWeeklyPDF()">
+              📄 Export PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-box" id="weekly-summary">Loading...</div>
+      </div>
+
+      <!-- Inventory Management Section -->
+      <div class="content-section" id="inventory-section">
+        <div class="section-header">
+          <h2>📦 Inventory Management / إدارة المخزون</h2>
+        </div>
+
+        <!-- Inventory Stats -->
+        <div class="inventory-stats">
+          <div class="inventory-stat">
+            <div class="stat-value" id="inv-total-items">0</div>
+            <div class="stat-label">Total Items / إجمالي المنتجات</div>
+          </div>
+          <div class="inventory-stat">
+            <div class="stat-value" id="inv-total-value">0</div>
+            <div class="stat-label">Total Value / القيمة الإجمالية</div>
+          </div>
+          <div class="inventory-stat warning">
+            <div class="stat-value" id="inv-low-stock">0</div>
+            <div class="stat-label">⚠️ Low Stock / مخزون منخفض</div>
+          </div>
+          <div class="inventory-stat">
+            <div class="stat-value" id="inv-sectors">0</div>
+            <div class="stat-label">Sectors / القطاعات</div>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="inventory-filters">
+          <div class="form-group">
+            <label>Sector / القطاع</label>
+            <select id="inv-sector-filter" onchange="filterInventory()">
+              <option value="">All Sectors / كل القطاعات</option>
+              <option value="grocery">🛒 Grocery / البقالة</option>
+              <option value="electronics">📱 Electronics / الإلكترونيات</option>
+              <option value="pharmacy">💊 Pharmacy / الصيدلية</option>
+              <option value="restaurant">🍽️ Restaurant / المطعم</option>
+              <option value="fashion_retail">👗 Fashion / الأزياء</option>
+              <option value="clinic">🏥 Clinic / العيادة</option>
+              <option value="education">📚 Education / التعليم</option>
+              <option value="home_services">
+                🏠 Home Services / خدمات منزلية
+              </option>
+              <option value="repair_workshop">🔧 Repair / الصيانة</option>
+              <option value="travel">✈️ Travel / السفر</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Search / البحث</label>
+            <input
+              type="text"
+              id="inv-search"
+              placeholder="Search by name..."
+              oninput="filterInventory()"
+            />
+          </div>
+          <div class="form-group">
+            <label>Stock Status</label>
+            <select id="inv-stock-filter" onchange="filterInventory()">
+              <option value="">All / الكل</option>
+              <option value="low">⚠️ Low Stock Only</option>
+              <option value="ok">✅ In Stock Only</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" onclick="refreshInventory()">
+              🔄 Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Inventory Grid -->
+        <div class="inventory-grid" id="inventory-grid">
+          <p style="text-align: center; color: #888; grid-column: 1/-1">
+            Loading inventory...
+          </p>
+        </div>
+      </div>
+
+      <!-- User Management Section -->
+      <div class="content-section" id="users-section">
+        <div class="section-header">
+          <h2>👥 User Management / إدارة المستخدمين</h2>
+          <button class="btn btn-primary" onclick="openAddUserModal()">
+            ➕ Add User
+          </button>
+        </div>
+
+        <div id="users-alert" class="alert"></div>
+
+        <!-- Users List -->
+        <div id="users-list">
+          <p style="text-align: center; color: #888">Loading users...</p>
+        </div>
+      </div>
+
+      <!-- AI Analysis Section -->
+      <div class="content-section" id="ai-analysis-section">
+        <div class="section-header">
+          <h2>🤖 AI Profit Analysis / تحليل الأرباح بالذكاء الاصطناعي</h2>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Analysis Type / نوع التحليل</label>
+            <select id="ai-analysis-type">
+              <option value="daily">📊 Daily Analysis / تحليل يومي</option>
+              <option value="weekly">📈 Weekly Analysis / تحليل أسبوعي</option>
+              <option value="suggestions">
+                💡 Business Suggestions / اقتراحات للعمل
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date Range / النطاق الزمني</label>
+            <input type="date" id="ai-analysis-date" />
+          </div>
+        </div>
+
+        <button
+          class="btn btn-primary"
+          onclick="runAIAnalysis()"
+          id="ai-analyze-btn"
+        >
+          🤖 Generate AI Analysis / توليد التحليل
+        </button>
+
+        <div
+          class="ai-analysis-container"
+          id="ai-analysis-result"
+          style="display: none"
+        >
+          <div class="ai-analysis-header">
+            <h3>🤖 AI Analysis Results</h3>
+            <button class="btn btn-export pdf" onclick="exportAIAnalysis()">
+              📄 Export PDF
+            </button>
+          </div>
+          <div class="ai-response" id="ai-response-text">
+            <!-- AI response will be displayed here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketing Helper Section -->
+      <div class="content-section" id="marketing-section">
+        <div class="section-header">
+          <h2>📣 Marketing Helper / مساعد التسويق</h2>
+        </div>
+
+        <div class="marketing-intro">
+          <p>
+            🚀 Generate professional marketing content, promotional offers, and
+            social media posts instantly!
+          </p>
+          <p>
+            🚀 أنشئ محتوى تسويقي احترافي وعروض ترويجية ومنشورات سوشيال ميديا
+            فوراً!
+          </p>
+        </div>
+
+        <div class="form-grid marketing-form">
+          <div class="form-group">
+            <label>📌 Content Type / نوع المحتوى</label>
+            <select id="marketing-content-type">
+              <option value="promotion">
+                🎁 Promotional Offer / عرض ترويجي
+              </option>
+              <option value="social_post">
+                📱 Social Media Post / منشور سوشيال
+              </option>
+              <option value="product_launch">
+                🚀 Product Launch / إطلاق منتج
+              </option>
+              <option value="seasonal">
+                🎉 Seasonal Campaign / حملة موسمية
+              </option>
+              <option value="engagement">
+                💬 Engagement Post / منشور تفاعلي
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>🏪 Business Sector / قطاع العمل</label>
+            <select id="marketing-sector">
+              <option value="grocery">🛒 Grocery / البقالة</option>
+              <option value="electronics">📱 Electronics / الإلكترونيات</option>
+              <option value="pharmacy">💊 Pharmacy / الصيدلية</option>
+              <option value="restaurant">🍽️ Restaurant / المطعم</option>
+              <option value="fashion_retail">👗 Fashion / الأزياء</option>
+              <option value="clinic">🏥 Clinic / العيادة</option>
+              <option value="education">📚 Education / التعليم</option>
+              <option value="home_services">
+                🏠 Home Services / خدمات منزلية
+              </option>
+              <option value="repair_workshop">🔧 Repair / الصيانة</option>
+              <option value="travel">✈️ Travel / السفر</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>📅 Season/Event / المناسبة</label>
+            <select id="marketing-season">
+              <option value="general">📌 General / عام</option>
+              <option value="ramadan">🌙 Ramadan / رمضان</option>
+              <option value="eid">🎊 Eid / العيد</option>
+              <option value="summer">☀️ Summer / الصيف</option>
+              <option value="back_to_school">
+                📚 Back to School / العودة للمدارس
+              </option>
+              <option value="black_friday">
+                🛍️ Black Friday / الجمعة البيضاء
+              </option>
+              <option value="new_year">🎆 New Year / السنة الجديدة</option>
+              <option value="valentines">❤️ Valentine's / عيد الحب</option>
+              <option value="mothers_day">💐 Mother's Day / عيد الأم</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>📲 Platform / المنصة</label>
+            <select id="marketing-platform">
+              <option value="general">📱 General / عام</option>
+              <option value="facebook">📘 Facebook</option>
+              <option value="instagram">📸 Instagram</option>
+              <option value="whatsapp">💬 WhatsApp</option>
+              <option value="twitter">🐦 Twitter/X</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>🌐 Language / اللغة</label>
+            <select id="marketing-language">
+              <option value="bilingual">🌍 Bilingual / ثنائي اللغة</option>
+              <option value="arabic">🇪🇬 Arabic / العربية</option>
+              <option value="english">🇬🇧 English / الإنجليزية</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 15px">
+          <label>📝 Additional Details / تفاصيل إضافية (optional)</label>
+          <textarea
+            id="marketing-details"
+            rows="3"
+            placeholder="Describe your products, target audience, or specific requirements...&#10;اوصف منتجاتك أو جمهورك المستهدف أو أي متطلبات خاصة..."
+          ></textarea>
+        </div>
+
+        <button
+          class="btn btn-primary btn-marketing"
+          onclick="generateMarketingContent()"
+          id="marketing-generate-btn"
+        >
+          ✨ Generate Marketing Content / إنشاء المحتوى التسويقي
+        </button>
+
+        <!-- Marketing Results -->
+        <div
+          class="marketing-result"
+          id="marketing-result"
+          style="display: none"
+        >
+          <div class="marketing-result-header">
+            <h3>📣 Your Marketing Content</h3>
+            <div class="marketing-actions">
+              <button class="btn-copy" onclick="copyMarketingContent()">
+                📋 Copy
+              </button>
+              <button class="btn-export pdf" onclick="exportMarketingPDF()">
+                📄 PDF
+              </button>
+            </div>
+          </div>
+          <div class="marketing-content" id="marketing-response-text">
+            <!-- Generated content will appear here -->
+          </div>
+        </div>
+
+        <!-- Quick Templates -->
+        <div class="quick-templates">
+          <h4>⚡ Quick Templates / قوالب سريعة</h4>
+          <div class="template-buttons">
+            <button class="template-btn" onclick="quickTemplate('discount')">
+              🏷️ Discount Offer
+            </button>
+            <button class="template-btn" onclick="quickTemplate('new_arrival')">
+              🆕 New Arrival
+            </button>
+            <button class="template-btn" onclick="quickTemplate('flash_sale')">
+              ⚡ Flash Sale
+            </button>
+            <button class="template-btn" onclick="quickTemplate('ramadan')">
+              🌙 Ramadan Special
+            </button>
+            <button class="template-btn" onclick="quickTemplate('eid')">
+              🎊 Eid Offer
+            </button>
+            <button class="template-btn" onclick="quickTemplate('engagement')">
+              💬 Engagement Post
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stock Adjustment Modal -->
+    <div class="modal-overlay" id="stock-modal">
+      <div class="modal">
+        <h3>📦 Adjust Stock / تعديل المخزون</h3>
+        <input type="hidden" id="modal-sector-id" />
+        <input type="hidden" id="modal-item-id" />
+        <div class="form-group">
+          <label>Item / المنتج</label>
+          <input
+            type="text"
+            id="modal-item-name"
+            readonly
+            style="background: #f0f2f5"
+          />
+        </div>
+        <div class="form-group">
+          <label>Current Stock / المخزون الحالي</label>
+          <input
+            type="number"
+            id="modal-current-stock"
+            readonly
+            style="background: #f0f2f5"
+          />
+        </div>
+        <div class="form-group">
+          <label>Adjustment Type / نوع التعديل</label>
+          <select id="modal-adjust-type">
+            <option value="add">➕ Add / إضافة</option>
+            <option value="subtract">➖ Subtract / خصم</option>
+            <option value="set">🔄 Set to / تحديد</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Quantity / الكمية</label>
+          <input
+            type="number"
+            id="modal-quantity"
+            min="0"
+            placeholder="Enter quantity..."
+          />
+        </div>
+        <div class="form-group">
+          <label>Reason / السبب</label>
+          <input
+            type="text"
+            id="modal-reason"
+            placeholder="e.g. New shipment, Sold, Damaged..."
+          />
+        </div>
+        <div class="modal-actions">
+          <button class="btn" onclick="closeStockModal()">
+            Cancel / إلغاء
+          </button>
+          <button class="btn btn-primary" onclick="submitStockAdjustment()">
+            Confirm / تأكيد
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal-overlay" id="user-modal">
+      <div class="modal">
+        <h3>👤 Add New User / إضافة مستخدم جديد</h3>
+        <div class="form-group">
+          <label>Username / اسم المستخدم</label>
+          <input
+            type="text"
+            id="new-user-username"
+            placeholder="Enter username..."
+          />
+        </div>
+        <div class="form-group">
+          <label>Password / كلمة المرور</label>
+          <input
+            type="password"
+            id="new-user-password"
+            placeholder="Enter password (min 6 chars)..."
+          />
+        </div>
+        <div class="form-group">
+          <label>Role / الدور</label>
+          <select id="new-user-role">
+            <option value="customer">📦 Customer / عميل</option>
+            <option value="accounting">📊 Accounting / محاسب</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Business Name / اسم العمل (optional)</label>
+          <input
+            type="text"
+            id="new-user-business"
+            placeholder="Enter business name..."
+          />
+        </div>
+        <div class="modal-actions">
+          <button class="btn" onclick="closeUserModal()">Cancel / إلغاء</button>
+          <button class="btn btn-primary" onclick="submitNewUser()">
+            Create User / إنشاء
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Business Name Modal -->
+    <div class="modal-overlay" id="edit-business-modal">
+      <div class="modal">
+        <h3>✏️ Edit Business Name / تعديل اسم العمل</h3>
+        <input type="hidden" id="edit-business-user-id" />
+        <div class="form-group">
+          <label>User / المستخدم</label>
+          <input
+            type="text"
+            id="edit-business-username"
+            disabled
+            style="background: #f0f0f0"
+          />
+        </div>
+        <div class="form-group">
+          <label>Business Name / اسم العمل</label>
+          <input
+            type="text"
+            id="edit-business-name"
+            placeholder="Enter business name..."
+          />
+        </div>
+        <div class="modal-actions">
+          <button class="btn" onclick="closeEditBusinessModal()">
+            Cancel / إلغاء
+          </button>
+          <button class="btn btn-primary" onclick="submitEditBusiness()">
+            Save / حفظ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentLang = "en";
+      let inventoryData = [];
+      let filteredInventory = [];
+      let revenueExpenseChart,
+        expenseCategoryChart,
+        profitTrendChart,
+        topProductsChart;
+      let dailySummaryData = null;
+      let weeklySummaryData = null;
+
+      // Tab switching
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".content-section")
+            .forEach((s) => s.classList.remove("active"));
+
+          tab.classList.add("active");
+          document
+            .getElementById(tab.dataset.tab + "-section")
+            .classList.add("active");
+
+          // Load specific tab data
+          if (tab.dataset.tab === "users") {
+            loadUsers();
+          } else if (tab.dataset.tab === "dashboard") {
+            loadDashboardCharts();
+          }
+        });
+      });
+
+      // Language toggle
+      document.querySelectorAll(".lang-toggle button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const parent = btn.parentElement;
+          parent
+            .querySelectorAll("button")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentLang = btn.dataset.lang;
+
+          // Reload reports with new language
+          loadDailyReport();
+          loadWeeklyReport();
+        });
+      });
+
+      // Current selected sector
+      let currentSector = "";
+
+      // Sector filter change handler
+      function onSectorFilterChange() {
+        currentSector = document.getElementById("sector-filter").value;
+        const statusEl = document.getElementById("sector-filter-status");
+
+        if (currentSector) {
+          const sectorName =
+            document.getElementById("sector-filter").selectedOptions[0].text;
+          statusEl.textContent = `✓ Filtering: ${sectorName}`;
+        } else {
+          statusEl.textContent = "";
+        }
+
+        // Reload all data with new sector filter
+        loadStats();
+        loadDashboardCharts();
+        loadDailyReport();
+        loadWeeklyReport();
+      }
+
+      // Set default dates
+      document.addEventListener("DOMContentLoaded", () => {
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("expense-date").value = today;
+        document.getElementById("revenue-date").value = today;
+        document.getElementById("daily-date").value = today;
+
+        // Set weekly start to Monday of current week
+        const date = new Date();
+        const day = date.getDay();
+        const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+        const monday = new Date(date.setDate(diff));
+        document.getElementById("weekly-start").value = monday
+          .toISOString()
+          .split("T")[0];
+
+        // Load initial data
+        loadCategories();
+        loadDailyReport();
+        loadWeeklyReport();
+        loadStats();
+        loadInventory();
+        loadDashboardCharts();
+        checkLowStockAlerts();
+
+        // Set AI analysis date
+        document.getElementById("ai-analysis-date").value = today;
+      });
+
+      async function loadCategories() {
+        try {
+          const response = await fetch("/api/accounting/categories");
+          const categories = await response.json();
+
+          const select = document.getElementById("expense-category");
+          categories.forEach((cat) => {
+            const option = document.createElement("option");
+            option.value = cat.id;
+            option.textContent = `${cat.icon} ${cat.name_en} - ${cat.name_ar}`;
+            select.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error loading categories:", error);
+        }
+      }
+
+      async function loadStats() {
+        try {
+          let url = "/api/accounting/daily?lang=" + currentLang;
+          if (currentSector) {
+            url += "&sector_id=" + encodeURIComponent(currentSector);
+          }
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.success) {
+            const summary = data.summary;
+            document.getElementById("stat-revenue").textContent =
+              `${summary.total_revenue.toFixed(2)} EGP`;
+            document.getElementById("stat-expenses").textContent =
+              `${summary.total_expenses.toFixed(2)} EGP`;
+            document.getElementById("stat-profit").textContent =
+              `${summary.net_profit.toFixed(2)} EGP`;
+            document.getElementById("stat-orders").textContent =
+              summary.order_count;
+
+            // Update profit color
+            const profitEl = document.getElementById("stat-profit");
+            profitEl.classList.remove("positive", "negative");
+            profitEl.classList.add(
+              summary.net_profit >= 0 ? "positive" : "negative",
+            );
+          }
+        } catch (error) {
+          console.error("Error loading stats:", error);
+        }
+      }
+
+      async function addExpense(event) {
+        event.preventDefault();
+
+        const alertEl = document.getElementById("expense-alert");
+        alertEl.className = "alert";
+        alertEl.style.display = "none";
+
+        const data = {
+          category: document.getElementById("expense-category").value,
+          amount: parseFloat(document.getElementById("expense-amount").value),
+          description: document.getElementById("expense-description").value,
+          date: document.getElementById("expense-date").value,
+        };
+
+        try {
+          const response = await fetch("/api/accounting/expense", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            alertEl.textContent = "✅ Expense added successfully!";
+            alertEl.className = "alert success";
+
+            // Reset form
+            document.getElementById("expense-amount").value = "";
+            document.getElementById("expense-description").value = "";
+
+            // Refresh stats
+            loadStats();
+            loadDailyReport();
+          } else {
+            alertEl.textContent =
+              "❌ " + (result.error || "Failed to add expense");
+            alertEl.className = "alert error";
+          }
+        } catch (error) {
+          alertEl.textContent = "❌ Connection error. Please try again.";
+          alertEl.className = "alert error";
+        }
+      }
+
+      async function addRevenue(event) {
+        event.preventDefault();
+
+        const alertEl = document.getElementById("revenue-alert");
+        alertEl.className = "alert";
+        alertEl.style.display = "none";
+
+        const data = {
+          amount: parseFloat(document.getElementById("revenue-amount").value),
+          items_summary: document.getElementById("revenue-description").value,
+          date: document.getElementById("revenue-date").value,
+          notes: document.getElementById("revenue-notes")?.value || "",
+        };
+
+        try {
+          const response = await fetch("/api/accounting/revenue", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            alertEl.textContent = "✅ Revenue added successfully!";
+            alertEl.className = "alert success";
+            alertEl.style.display = "block";
+
+            // Reset form
+            document.getElementById("revenue-amount").value = "";
+            document.getElementById("revenue-description").value = "";
+
+            // Refresh stats
+            loadStats();
+            loadDailyReport();
+          } else {
+            alertEl.textContent =
+              "❌ " + (result.error || "Failed to add revenue");
+            alertEl.className = "alert error";
+            alertEl.style.display = "block";
+          }
+        } catch (error) {
+          alertEl.textContent = "❌ Connection error. Please try again.";
+          alertEl.className = "alert error";
+          alertEl.style.display = "block";
+        }
+      }
+
+      async function loadDailyReport() {
+        const date = document.getElementById("daily-date").value;
+        const summaryEl = document.getElementById("daily-summary");
+
+        try {
+          let url = `/api/accounting/daily?date=${date}&lang=${currentLang}`;
+          if (currentSector) {
+            url += "&sector_id=" + encodeURIComponent(currentSector);
+          }
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.success) {
+            summaryEl.textContent = data.summary_text;
+          } else {
+            summaryEl.textContent = "Error loading report";
+          }
+        } catch (error) {
+          summaryEl.textContent = "Connection error";
+        }
+      }
+
+      async function loadWeeklyReport() {
+        const weekStart = document.getElementById("weekly-start").value;
+        const summaryEl = document.getElementById("weekly-summary");
+
+        try {
+          let url = `/api/accounting/weekly?weekStart=${weekStart}&lang=${currentLang}`;
+          if (currentSector) {
+            url += "&sector_id=" + encodeURIComponent(currentSector);
+          }
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.success) {
+            summaryEl.textContent = data.summary_text;
+          } else {
+            summaryEl.textContent = "Error loading report";
+          }
+        } catch (error) {
+          summaryEl.textContent = "Connection error";
+        }
+      }
+
+      // ==================== INVENTORY FUNCTIONS ====================
+
+      async function loadInventory() {
+        try {
+          const response = await fetch("/api/inventory");
+          const data = await response.json();
+
+          if (data.success) {
+            inventoryData = data.inventory;
+            updateInventoryStats();
+            filterInventory();
+          } else {
+            console.error("Failed to load inventory:", data.error);
+          }
+        } catch (error) {
+          console.error("Error loading inventory:", error);
+        }
+      }
+
+      function updateInventoryStats() {
+        const totalItems = inventoryData.length;
+        const totalValue = inventoryData.reduce(
+          (sum, item) => sum + item.price * item.stock_qty,
+          0,
+        );
+        const lowStock = inventoryData.filter(
+          (item) => item.stock_qty <= item.reorder_level,
+        ).length;
+        const sectors = [
+          ...new Set(inventoryData.map((item) => item.sector_id)),
+        ].length;
+
+        document.getElementById("inv-total-items").textContent = totalItems;
+        document.getElementById("inv-total-value").textContent =
+          totalValue.toFixed(2) + " EGP";
+        document.getElementById("inv-low-stock").textContent = lowStock;
+        document.getElementById("inv-sectors").textContent = sectors;
+      }
+
+      function filterInventory() {
+        const sectorFilter = document.getElementById("inv-sector-filter").value;
+        const searchTerm = document
+          .getElementById("inv-search")
+          .value.toLowerCase();
+        const stockFilter = document.getElementById("inv-stock-filter").value;
+
+        filteredInventory = inventoryData.filter((item) => {
+          // Sector filter
+          if (sectorFilter && item.sector_id !== sectorFilter) return false;
+
+          // Search filter
+          if (searchTerm) {
+            const matchesSearch =
+              item.name_en.toLowerCase().includes(searchTerm) ||
+              item.name_ar.includes(searchTerm) ||
+              item.item_id.toLowerCase().includes(searchTerm);
+            if (!matchesSearch) return false;
+          }
+
+          // Stock filter
+          if (stockFilter === "low" && item.stock_qty > item.reorder_level)
+            return false;
+          if (stockFilter === "ok" && item.stock_qty <= item.reorder_level)
+            return false;
+
+          return true;
+        });
+
+        renderInventory();
+      }
+
+      function renderInventory() {
+        const grid = document.getElementById("inventory-grid");
+
+        if (filteredInventory.length === 0) {
+          grid.innerHTML =
+            '<p style="text-align: center; color: #888; grid-column: 1/-1;">No items found / لا توجد منتجات</p>';
+          return;
+        }
+
+        const sectorEmoji = {
+          grocery: "🛒",
+          electronics: "📱",
+          pharmacy: "💊",
+          restaurant: "🍽️",
+          fashion_retail: "👗",
+          clinic: "🏥",
+          education: "📚",
+          home_services: "🏠",
+          repair_workshop: "🔧",
+          travel: "✈️",
+        };
+
+        grid.innerHTML = filteredInventory
+          .map((item) => {
+            const isLowStock = item.stock_qty <= item.reorder_level;
+            return `
+            <div class="inventory-card ${isLowStock ? "low-stock" : ""}">
+              <div class="item-header">
+                <div>
+                  <div class="item-name">${sectorEmoji[item.sector_id] || "📦"} ${item.name_en}</div>
+                  <div class="item-name-ar">${item.name_ar}</div>
+                </div>
+                <span class="item-id">${item.item_id}</span>
+              </div>
+              <div class="item-details">
+                <div class="detail-item">
+                  <span class="label">Price:</span>
+                  <span class="value">${item.price.toFixed(2)} EGP</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Reorder:</span>
+                  <span class="value">${item.reorder_level}</span>
+                </div>
+              </div>
+              <div class="stock-info">
+                <div>
+                  <small style="color: #888;">Stock Qty / الكمية</small>
+                  <div class="stock-qty ${isLowStock ? "low" : "ok"}">${item.stock_qty} ${isLowStock ? "⚠️" : "✅"}</div>
+                </div>
+                <div class="stock-actions">
+                  <button class="btn-add" onclick="openStockModal('${item.sector_id}', '${item.item_id}', '${item.name_en}', ${item.stock_qty}, 'add')" title="Add Stock">+</button>
+                  <button class="btn-subtract" onclick="openStockModal('${item.sector_id}', '${item.item_id}', '${item.name_en}', ${item.stock_qty}, 'subtract')" title="Remove Stock">−</button>
+                </div>
+              </div>
+            </div>
+          `;
+          })
+          .join("");
+      }
+
+      function openStockModal(
+        sectorId,
+        itemId,
+        itemName,
+        currentStock,
+        adjustType = "add",
+      ) {
+        document.getElementById("modal-sector-id").value = sectorId;
+        document.getElementById("modal-item-id").value = itemId;
+        document.getElementById("modal-item-name").value = itemName;
+        document.getElementById("modal-current-stock").value = currentStock;
+        document.getElementById("modal-adjust-type").value = adjustType;
+        document.getElementById("modal-quantity").value = "";
+        document.getElementById("modal-reason").value = "";
+
+        document.getElementById("stock-modal").classList.add("active");
+      }
+
+      function closeStockModal() {
+        document.getElementById("stock-modal").classList.remove("active");
+      }
+
+      async function submitStockAdjustment() {
+        const sectorId = document.getElementById("modal-sector-id").value;
+        const itemId = document.getElementById("modal-item-id").value;
+        const currentStock = parseInt(
+          document.getElementById("modal-current-stock").value,
+        );
+        const adjustType = document.getElementById("modal-adjust-type").value;
+        const quantity = parseInt(
+          document.getElementById("modal-quantity").value,
+        );
+        const reason = document.getElementById("modal-reason").value;
+
+        if (!quantity || quantity < 0) {
+          alert("Please enter a valid quantity");
+          return;
+        }
+
+        let newQty;
+        if (adjustType === "add") {
+          newQty = currentStock + quantity;
+        } else if (adjustType === "subtract") {
+          newQty = Math.max(0, currentStock - quantity);
+        } else {
+          newQty = quantity;
+        }
+
+        try {
+          const response = await fetch("/api/inventory/adjust", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              sector_id: sectorId,
+              item_id: itemId,
+              new_qty: newQty,
+              reason: reason || `${adjustType} ${quantity} units`,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            closeStockModal();
+            loadInventory();
+            loadStats();
+          } else {
+            alert("Error: " + (result.error || "Failed to update stock"));
+          }
+        } catch (error) {
+          console.error("Error adjusting stock:", error);
+          alert("Connection error. Please try again.");
+        }
+      }
+
+      async function handleLogout() {
+        try {
+          await fetch("/api/auth/logout", { method: "POST" });
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.href = "/login";
+        } catch (error) {
+          console.error("Logout error:", error);
+          window.location.href = "/login";
+        }
+      }
+
+      // ==================== DASHBOARD CHARTS ====================
+
+      async function loadDashboardCharts() {
+        try {
+          let url = "/api/accounting/dashboard-data";
+          if (currentSector) {
+            url += "?sector_id=" + encodeURIComponent(currentSector);
+          }
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.success) {
+            renderRevenueExpenseChart(data.daily_data);
+            renderExpenseCategoryChart(data.expense_categories);
+            renderProfitTrendChart(data.daily_data);
+            renderTopProductsChart(data.top_products);
+          }
+        } catch (error) {
+          console.error("Error loading dashboard data:", error);
+          // Use fallback with basic daily data
+          loadBasicCharts();
+        }
+      }
+
+      async function loadBasicCharts() {
+        // Fallback to basic charts from existing data
+        const labels = [];
+        const revenues = [];
+        const expenses = [];
+
+        for (let i = 6; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(date.getDate() - i);
+          const dateStr = date.toISOString().split("T")[0];
+          labels.push(date.toLocaleDateString("en-US", { weekday: "short" }));
+
+          try {
+            let fetchUrl = `/api/accounting/daily?date=${dateStr}`;
+            if (currentSector) {
+              fetchUrl += "&sector_id=" + encodeURIComponent(currentSector);
+            }
+            const res = await fetch(fetchUrl);
+            const data = await res.json();
+            if (data.success) {
+              revenues.push(data.summary.total_revenue || 0);
+              expenses.push(data.summary.total_expenses || 0);
+            } else {
+              revenues.push(0);
+              expenses.push(0);
+            }
+          } catch {
+            revenues.push(0);
+            expenses.push(0);
+          }
+        }
+
+        renderRevenueExpenseChart({ labels, revenues, expenses });
+        renderProfitTrendChart({ labels, revenues, expenses });
+      }
+
+      function renderRevenueExpenseChart(data) {
+        const ctx = document
+          .getElementById("revenueExpenseChart")
+          .getContext("2d");
+
+        if (revenueExpenseChart) {
+          revenueExpenseChart.destroy();
+        }
+
+        const labels = data.labels || [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+        ];
+        const revenues = data.revenues || [0, 0, 0, 0, 0, 0, 0];
+        const expenses = data.expenses || [0, 0, 0, 0, 0, 0, 0];
+
+        revenueExpenseChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Revenue / الإيرادات",
+                data: revenues,
+                backgroundColor: "rgba(40, 167, 69, 0.7)",
+                borderColor: "rgba(40, 167, 69, 1)",
+                borderWidth: 1,
+              },
+              {
+                label: "Expenses / المصروفات",
+                data: expenses,
+                backgroundColor: "rgba(220, 53, 69, 0.7)",
+                borderColor: "rgba(220, 53, 69, 1)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: true },
+            },
+          },
+        });
+      }
+
+      function renderExpenseCategoryChart(data) {
+        const ctx = document
+          .getElementById("expenseCategoryChart")
+          .getContext("2d");
+
+        if (expenseCategoryChart) {
+          expenseCategoryChart.destroy();
+        }
+
+        const categories = data?.categories || [
+          "Rent",
+          "Utilities",
+          "Salaries",
+          "Other",
+        ];
+        const amounts = data?.amounts || [25, 20, 40, 15];
+        const colors = [
+          "rgba(102, 126, 234, 0.8)",
+          "rgba(118, 75, 162, 0.8)",
+          "rgba(40, 167, 69, 0.8)",
+          "rgba(255, 193, 7, 0.8)",
+          "rgba(220, 53, 69, 0.8)",
+          "rgba(23, 162, 184, 0.8)",
+        ];
+
+        expenseCategoryChart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: categories,
+            datasets: [
+              {
+                data: amounts,
+                backgroundColor: colors.slice(0, categories.length),
+                borderWidth: 2,
+                borderColor: "#fff",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        });
+      }
+
+      function renderProfitTrendChart(data) {
+        const ctx = document
+          .getElementById("profitTrendChart")
+          .getContext("2d");
+
+        if (profitTrendChart) {
+          profitTrendChart.destroy();
+        }
+
+        const labels = data.labels || [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+        ];
+        const revenues = data.revenues || [0, 0, 0, 0, 0, 0, 0];
+        const expenses = data.expenses || [0, 0, 0, 0, 0, 0, 0];
+        const profits = revenues.map((r, i) => r - expenses[i]);
+
+        profitTrendChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Net Profit / صافي الربح",
+                data: profits,
+                borderColor: "rgba(102, 126, 234, 1)",
+                backgroundColor: "rgba(102, 126, 234, 0.1)",
+                fill: true,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: true },
+            },
+          },
+        });
+      }
+
+      function renderTopProductsChart(data) {
+        const ctx = document
+          .getElementById("topProductsChart")
+          .getContext("2d");
+
+        if (topProductsChart) {
+          topProductsChart.destroy();
+        }
+
+        const products = data?.products || [
+          "Product 1",
+          "Product 2",
+          "Product 3",
+          "Product 4",
+          "Product 5",
+        ];
+        const sales = data?.sales || [30, 25, 20, 15, 10];
+
+        topProductsChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: products,
+            datasets: [
+              {
+                label: "Sales / المبيعات",
+                data: sales,
+                backgroundColor: [
+                  "rgba(102, 126, 234, 0.8)",
+                  "rgba(118, 75, 162, 0.8)",
+                  "rgba(40, 167, 69, 0.8)",
+                  "rgba(255, 193, 7, 0.8)",
+                  "rgba(23, 162, 184, 0.8)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            indexAxis: "y",
+            responsive: true,
+            scales: {
+              x: { beginAtZero: true },
+            },
+          },
+        });
+      }
+
+      // ==================== LOW STOCK ALERTS ====================
+
+      async function checkLowStockAlerts() {
+        try {
+          const response = await fetch("/api/inventory/low-stock");
+          const data = await response.json();
+
+          if (data.success && data.items && data.items.length > 0) {
+            const alertContainer = document.getElementById("low-stock-alerts");
+            const alertText = document.getElementById("low-stock-alert-text");
+
+            alertText.textContent = `⚠️ ${data.items.length} item(s) are running low on stock! / ${data.items.length} منتج(ات) بحاجة لإعادة تعبئة`;
+            alertContainer.style.display = "block";
+          }
+        } catch (error) {
+          console.error("Error checking low stock:", error);
+        }
+      }
+
+      // ==================== USER MANAGEMENT ====================
+
+      async function loadUsers() {
+        try {
+          const response = await fetch("/api/admin/users");
+          const data = await response.json();
+
+          const usersList = document.getElementById("users-list");
+
+          if (data.success && data.users) {
+            usersList.innerHTML = data.users
+              .map(
+                (user) => `
+              <div class="user-card">
+                <div class="user-info-card">
+                  <div class="user-avatar">${user.username.charAt(0).toUpperCase()}</div>
+                  <div class="user-details">
+                    <h4>${user.username}</h4>
+                    <span id="business-display-${user._id}">${user.business_name || "No business name"}</span>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span class="role-badge ${user.role}">${user.role === "accounting" ? "📊 Accounting" : "📦 Customer"}</span>
+                  <button class="btn btn-secondary" onclick="openEditBusinessModal('${user._id}', '${user.username}', '${user.business_name || ""}')" style="padding: 8px 15px; font-size: 0.85rem;">✏️</button>
+                  <button class="btn btn-danger" onclick="deleteUser('${user._id}')" style="padding: 8px 15px; font-size: 0.85rem;">🗑️</button>
+                </div>
+              </div>
+            `,
+              )
+              .join("");
+          } else {
+            usersList.innerHTML =
+              '<p style="text-align: center; color: #888;">No users found or access denied.</p>';
+          }
+        } catch (error) {
+          console.error("Error loading users:", error);
+          document.getElementById("users-list").innerHTML =
+            '<p style="color: #dc3545;">Error loading users. Make sure the API endpoint exists.</p>';
+        }
+      }
+
+      function openAddUserModal() {
+        document.getElementById("new-user-username").value = "";
+        document.getElementById("new-user-password").value = "";
+        document.getElementById("new-user-role").value = "customer";
+        document.getElementById("new-user-business").value = "";
+        document.getElementById("user-modal").classList.add("active");
+      }
+
+      function closeUserModal() {
+        document.getElementById("user-modal").classList.remove("active");
+      }
+
+      // Edit Business Name Functions
+      function openEditBusinessModal(userId, username, businessName) {
+        document.getElementById("edit-business-user-id").value = userId;
+        document.getElementById("edit-business-username").value = username;
+        document.getElementById("edit-business-name").value =
+          businessName || "";
+        document.getElementById("edit-business-modal").classList.add("active");
+      }
+
+      function closeEditBusinessModal() {
+        document
+          .getElementById("edit-business-modal")
+          .classList.remove("active");
+      }
+
+      async function submitEditBusiness() {
+        const userId = document.getElementById("edit-business-user-id").value;
+        const businessName = document
+          .getElementById("edit-business-name")
+          .value.trim();
+
+        try {
+          const response = await fetch(`/api/admin/users/${userId}/business`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ business_name: businessName }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            closeEditBusinessModal();
+            loadUsers();
+            alert("✅ Business name updated successfully!");
+          } else {
+            alert("❌ " + (result.error || "Failed to update business name"));
+          }
+        } catch (error) {
+          alert("❌ Connection error");
+        }
+      }
+
+      async function submitNewUser() {
+        const username = document
+          .getElementById("new-user-username")
+          .value.trim();
+        const password = document.getElementById("new-user-password").value;
+        const role = document.getElementById("new-user-role").value;
+        const businessName = document
+          .getElementById("new-user-business")
+          .value.trim();
+
+        if (!username || !password) {
+          alert("Please enter username and password");
+          return;
+        }
+
+        if (password.length < 6) {
+          alert("Password must be at least 6 characters");
+          return;
+        }
+
+        try {
+          const response = await fetch("/api/admin/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username,
+              password,
+              role,
+              business_name: businessName,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            closeUserModal();
+            loadUsers();
+            alert("✅ User created successfully!");
+          } else {
+            alert("❌ " + (result.error || "Failed to create user"));
+          }
+        } catch (error) {
+          alert("❌ Connection error");
+        }
+      }
+
+      async function deleteUser(userId) {
+        if (!confirm("Are you sure you want to delete this user?")) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`/api/admin/users/${userId}`, {
+            method: "DELETE",
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            loadUsers();
+            alert("✅ User deleted successfully!");
+          } else {
+            alert("❌ " + (result.error || "Failed to delete user"));
+          }
+        } catch (error) {
+          alert("❌ Connection error");
+        }
+      }
+
+      // ==================== AI ANALYSIS ====================
+
+      async function runAIAnalysis() {
+        const analysisType = document.getElementById("ai-analysis-type").value;
+        const date = document.getElementById("ai-analysis-date").value;
+        const btn = document.getElementById("ai-analyze-btn");
+        const resultContainer = document.getElementById("ai-analysis-result");
+        const responseText = document.getElementById("ai-response-text");
+
+        btn.innerHTML = '<span class="loading-spinner"></span> Analyzing...';
+        btn.disabled = true;
+
+        try {
+          const response = await fetch("/api/ai/analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ analysis_type: analysisType, date: date }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            responseText.innerHTML = data.analysis;
+            resultContainer.style.display = "block";
+          } else {
+            responseText.innerHTML = "❌ " + (data.error || "Analysis failed");
+            resultContainer.style.display = "block";
+          }
+        } catch (error) {
+          responseText.innerHTML = "❌ Connection error. Please try again.";
+          resultContainer.style.display = "block";
+        }
+
+        btn.innerHTML = "🤖 Generate AI Analysis / توليد التحليل";
+        btn.disabled = false;
+      }
+
+      // ==================== EXPORT FUNCTIONS ====================
+
+      function exportDailyCSV() {
+        const date = document.getElementById("daily-date").value;
+        window.open(`/api/export/daily/csv?date=${date}`, "_blank");
+      }
+
+      function exportDailyPDF() {
+        const content = document.getElementById("daily-summary").textContent;
+        generatePDF("Daily Report", content);
+      }
+
+      function exportWeeklyCSV() {
+        const weekStart = document.getElementById("weekly-start").value;
+        window.open(`/api/export/weekly/csv?weekStart=${weekStart}`, "_blank");
+      }
+
+      function exportWeeklyPDF() {
+        const content = document.getElementById("weekly-summary").textContent;
+        generatePDF("Weekly Report", content);
+      }
+
+      function exportAIAnalysis() {
+        const content = document.getElementById("ai-response-text").textContent;
+        generatePDF("AI Analysis Report", content);
+      }
+
+      function exportDashboard() {
+        const content = `Dashboard Export\n\nRevenue: ${document.getElementById("stat-revenue").textContent}\nExpenses: ${document.getElementById("stat-expenses").textContent}\nNet Profit: ${document.getElementById("stat-profit").textContent}\nOrders: ${document.getElementById("stat-orders").textContent}`;
+        generatePDF("Dashboard Summary", content);
+      }
+
+      function generatePDF(title, content) {
+        // Create a printable version
+        const printWindow = window.open("", "_blank");
+        printWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>${title} - Digital Employee</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; }
+              h1 { color: #333; border-bottom: 2px solid #667eea; padding-bottom: 10px; }
+              .content { white-space: pre-wrap; background: #f5f5f5; padding: 20px; border-radius: 10px; margin-top: 20px; }
+              .footer { margin-top: 30px; color: #888; font-size: 12px; text-align: center; }
+            </style>
+          </head>
+          <body>
+            <h1>📊 ${title}</h1>
+            <p><strong>Generated:</strong> ${new Date().toLocaleString()}</p>
+            <div class="content">${content}</div>
+            <div class="footer">Generated by Digital Employee - MSME Assistant</div>
+          </body>
+          </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+      }
+
+      function downloadCSV(filename, data) {
+        const blob = new Blob([data], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+
+      // ==================== MARKETING HELPER ====================
+
+      async function generateMarketingContent() {
+        const contentType = document.getElementById(
+          "marketing-content-type",
+        ).value;
+        const sector = document.getElementById("marketing-sector").value;
+        const season = document.getElementById("marketing-season").value;
+        const platform = document.getElementById("marketing-platform").value;
+        const language = document.getElementById("marketing-language").value;
+        const additionalDetails =
+          document.getElementById("marketing-details").value;
+
+        const btn = document.getElementById("marketing-generate-btn");
+        const resultContainer = document.getElementById("marketing-result");
+        const responseText = document.getElementById("marketing-response-text");
+
+        btn.innerHTML =
+          '<span class="loading-spinner"></span> Generating... / جاري التوليد...';
+        btn.disabled = true;
+
+        try {
+          const response = await fetch("/api/marketing/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              content_type: contentType,
+              sector: sector,
+              season: season,
+              platform: platform,
+              language: language,
+              additional_details: additionalDetails,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            responseText.innerHTML = formatMarketingContent(data.content);
+            resultContainer.style.display = "block";
+            resultContainer.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          } else {
+            responseText.innerHTML =
+              "❌ " + (data.error || "Generation failed / فشل التوليد");
+            resultContainer.style.display = "block";
+          }
+        } catch (error) {
+          responseText.innerHTML =
+            "❌ Connection error. Please try again. / خطأ في الاتصال";
+          resultContainer.style.display = "block";
+        }
+
+        btn.innerHTML = "🚀 Generate Marketing Content / توليد المحتوى";
+        btn.disabled = false;
+      }
+
+      function formatMarketingContent(content) {
+        // Format headers and sections
+        let formatted = content
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n---\n/g, '<hr style="margin: 15px 0;">')
+          .replace(
+            /📢|🎯|💡|🔥|✨|📱|💬|🛒|⭐|🎁|💰|📣|🎉|👋|📝|🌟|🚀|❤️|👍|💪/g,
+            '<span style="font-size: 1.2em;">$&</span>',
+          );
+
+        return formatted;
+      }
+
+      function copyMarketingContent() {
+        const content = document.getElementById(
+          "marketing-response-text",
+        ).innerText;
+        navigator.clipboard
+          .writeText(content)
+          .then(() => {
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "✅ Copied!";
+            btn.style.background = "#218838";
+            setTimeout(() => {
+              btn.innerHTML = originalText;
+              btn.style.background = "#28a745";
+            }, 2000);
+          })
+          .catch(() => {
+            // Fallback for older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = content;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            alert("✅ Content copied to clipboard!");
+          });
+      }
+
+      function exportMarketingPDF() {
+        const content = document.getElementById(
+          "marketing-response-text",
+        ).innerText;
+        generatePDF("Marketing Content", content);
+      }
+
+      function quickTemplate(templateType) {
+        const contentTypeSelect = document.getElementById(
+          "marketing-content-type",
+        );
+        const seasonSelect = document.getElementById("marketing-season");
+        const platformSelect = document.getElementById("marketing-platform");
+
+        switch (templateType) {
+          case "discount":
+            contentTypeSelect.value = "promotion";
+            seasonSelect.value = "general";
+            platformSelect.value = "facebook";
+            break;
+          case "new_arrival":
+            contentTypeSelect.value = "product_launch";
+            seasonSelect.value = "general";
+            platformSelect.value = "instagram";
+            break;
+          case "flash_sale":
+            contentTypeSelect.value = "promotion";
+            seasonSelect.value = "general";
+            platformSelect.value = "whatsapp";
+            break;
+          case "ramadan":
+            contentTypeSelect.value = "seasonal";
+            seasonSelect.value = "ramadan";
+            platformSelect.value = "instagram";
+            break;
+          case "eid":
+            contentTypeSelect.value = "seasonal";
+            seasonSelect.value = "eid";
+            platformSelect.value = "whatsapp";
+            break;
+          case "engagement":
+            contentTypeSelect.value = "engagement";
+            seasonSelect.value = "general";
+            platformSelect.value = "facebook";
+            break;
+        }
+
+        // Visual feedback
+        document.querySelectorAll(".template-btn").forEach((btn) => {
+          btn.style.borderColor = "#ddd";
+          btn.style.background = "white";
+        });
+        event.target.style.borderColor = "#667eea";
+        event.target.style.background = "#667eea15";
+      }
+    </script>
+  </body>
+</html>
