@@ -1,4 +1,15 @@
+
 # Digital Employee - MSME Chat Agent
+
+## 📸 Screenshots
+
+<p align="center">
+    <img src="screenshots/Screenshot%202026-01-28%20115930.png" alt="Chat UI" width="600" />
+    <br>
+    <img src="screenshots/Screenshot%202026-01-28%20120004.png" alt="Order Example" width="600" />
+    <br>
+    <img src="screenshots/Screenshot%202026-01-28%20120118.png" alt="Product Catalog" width="600" />
+</p>
 
 ## 🎯 Vision
 
